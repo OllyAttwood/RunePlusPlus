@@ -1,0 +1,85 @@
+from token_types import TokenTypes as TT
+from nodes import *
+
+class Parser:
+    """
+    Converts a list of tokens into an Abstract Syntax Tree (AST) representation of the
+    program
+    """
+
+    def __init__(self, tokens):
+        """
+        The tokens parameter is a 2D list of tokens, where each row represents a row
+        from the source code
+        """
+        self.tokens = tokens
+        self.cur_index = 0
+        self.cur_token = self.tokens[0]
+
+    def next_token(self):
+        """Moves to the next token"""
+        self.cur_index += 1
+
+        if self.cur_index >= len(self.tokens):
+            self.cur_token = None
+        else:
+            self.cur_token = self.tokens[self.cur_index]
+
+    def parse_expression(self):
+        """
+        Attempts to parse the current token(s) as an expression (add or subtract
+        operation)
+        """
+        return self.parse_binary_operation(self.parse_term, [TT.ADD, TT.MINUS])
+
+    def parse_term(self):
+        """
+        Attempts to parse the current token(s) as a term (multiply or divide operation)
+        """
+        return self.parse_binary_operation(self.parse_factor, [TT.MULTIPLY, TT.DIVIDE])
+
+    def parse_binary_operation(self, operand_function, operators):
+        """
+        Attempts to parse the current token(s) as a term or expression, depending on
+        provided paramters.
+        operand_function is the function to parse the tokens on each side of the
+            operator.
+        operators is the applicable operators for this binary operation (add/subtract or
+            mmultiply/divide).
+        """
+        left_node = operand_function()
+
+        while (
+            self.cur_token != None and
+            self.cur_token.token_type in operators
+        ):
+            operator_token = self.cur_token
+            self.next_token()
+            right_node = operand_function()
+
+            # Update left_node with the entire binary operation, including the previous
+            # left_node
+            left_node = BinaryOperationNode(operator_token, left_node, right_node)
+
+        return left_node
+
+    def parse_factor(self):
+        """Attempts to parse the current token as a factor (number, identifier etc)"""
+        # Numbers
+        if self.cur_token.token_type in [TT.INT, TT.FLOAT]:
+            num_node = NumberNode(self.cur_token)
+            self.next_token()
+
+            return num_node
+
+        # Brackets
+        elif self.cur_token.token_type == TT.LEFT_BRACKET:
+            self.next_token()
+            expression = self.parse_expression()
+
+            if self.cur_token.token_type != TT.RIGHT_BRACKET:
+                print("--- Throw error here - no closing bracket ---")
+
+            self.next_token()
+
+            return expression
