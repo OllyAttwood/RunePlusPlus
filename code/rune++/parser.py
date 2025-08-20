@@ -26,6 +26,18 @@ class Parser:
         else:
             self.cur_token = self.tokens[self.cur_index]
 
+    def parse_line(self):
+        """Calls parse_expression() but checks that the whole line has been parsed"""
+        expression = self.parse_expression()
+
+        # self.cur_token should be None, otherwise it means something hasn't been parsed
+        if self.cur_token != None:
+            raise RunePlusPlusError(
+                f"End of line not reached! Current token is {self.cur_token}"
+            )
+
+        return expression
+
     def parse_expression(self):
         """
         Attempts to parse the current token(s) as an expression (add or subtract

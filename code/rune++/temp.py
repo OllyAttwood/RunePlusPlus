@@ -12,5 +12,5 @@ lexer.lex()
 print(lexer.tokens)
 
 parser = Parser(lexer.tokens[0])
-ast = parser.parse_expression()
+ast = parser.parse_line()
 print(ast)
