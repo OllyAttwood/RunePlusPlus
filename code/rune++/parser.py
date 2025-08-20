@@ -91,7 +91,7 @@ class Parser:
             expression = self.parse_expression()
 
             if self.cur_token.token_type != TT.RIGHT_BRACKET:
-                print("--- Throw error here - no closing bracket ---")
+                raise RunePlusPlusError("No closing bracket!")
 
             self.next_token()
 
