@@ -10,7 +10,6 @@ class Lexer:
     SEPARATOR = "⋅"
     DIGITS = "ᛄᛁ"
     DECIMAL_POINT = "."
-    MINUS = "ᛒ"
 
     def __init__(self, text):
         self.text = text
@@ -49,9 +48,6 @@ class Lexer:
         Returns the token type (int or float) if the text is a number, otherwise returns
         None
         """
-        # Handles negative numbers
-        if text[0] == self.MINUS:
-            text = text[1:]
 
         if set(text) <= set(self.DIGITS + self.DECIMAL_POINT):
             num_decimal_points = text.count(self.DECIMAL_POINT)

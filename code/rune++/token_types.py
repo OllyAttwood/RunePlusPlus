@@ -17,3 +17,7 @@ class TokenTypes:
     # Brackets
     LEFT_BRACKET = "LEFT_BRACKET"
     RIGHT_BRACKET = "RIGHT_BRACKET"
+
+    # Groups of token types
+    NUMBER_TYPES = (INT, FLOAT)
+    UNARY_OPERATORS = (MINUS)

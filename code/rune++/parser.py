@@ -66,7 +66,7 @@ class Parser:
     def parse_factor(self):
         """Attempts to parse the current token as a factor (number, identifier etc)"""
         # Numbers
-        if self.cur_token.token_type in [TT.INT, TT.FLOAT]:
+        if self.cur_token.token_type in TT.NUMBER_TYPES:
             num_node = NumberNode(self.cur_token)
             self.next_token()
 
@@ -83,3 +83,11 @@ class Parser:
             self.next_token()
 
             return expression
+
+        # Unary operators (negative numbers etc)
+        elif self.cur_token.token_type in TT.UNARY_OPERATORS:
+            operand_token = self.cur_token
+            self.next_token()
+            operand = self.parse_factor()
+
+            return UnaryOperationNode(operand_token, operand)

@@ -7,7 +7,7 @@ lexer.lex()
 print(lexer.tokens)
 """
 
-lexer = Lexer("ᛁᛄᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛁᛄᛁ⋅ᛆ")
+lexer = Lexer("ᛁᛄᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ")
 lexer.lex()
 print(lexer.tokens)
 
