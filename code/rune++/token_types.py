@@ -21,3 +21,5 @@ class TokenTypes:
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
     UNARY_OPERATORS = (MINUS)
+    EXPRESSION_OPERATORS = (ADD, MINUS)
+    TERM_OPERATORS = (MULTIPLY, DIVIDE)

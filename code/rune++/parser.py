@@ -43,13 +43,13 @@ class Parser:
         Attempts to parse the current token(s) as an expression (add or subtract
         operation)
         """
-        return self.parse_binary_operation(self.parse_term, [TT.ADD, TT.MINUS])
+        return self.parse_binary_operation(self.parse_term, TT.EXPRESSION_OPERATORS)
 
     def parse_term(self):
         """
         Attempts to parse the current token(s) as a term (multiply or divide operation)
         """
-        return self.parse_binary_operation(self.parse_factor, [TT.MULTIPLY, TT.DIVIDE])
+        return self.parse_binary_operation(self.parse_factor, TT.TERM_OPERATORS)
 
     def parse_binary_operation(self, operand_function, operators):
         """
