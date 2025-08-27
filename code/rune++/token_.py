@@ -9,6 +9,6 @@ class Token:
         self.value = value
 
     def __repr__(self):
-        value_str = ": " + self.value if self.value else ""
+        value_str = ": " + str(self.value) if self.value else ""
 
         return f"<{self.token_type}{value_str}>"

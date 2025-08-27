@@ -1,6 +1,7 @@
 from token_types import TokenTypes as TT
 from token_ import Token
 from token_map import TOKEN_TYPE_DICT
+import number_converter
 
 class Lexer:
     """
@@ -41,7 +42,8 @@ class Lexer:
         except KeyError:
             number_type = self.is_a_number(text) # None, if text is not a number
             if number_type:
-                return Token(number_type, text)
+                value = number_converter.from_runes_to_base10(text)
+                return Token(number_type, value)
 
     def is_a_number(self, text):
         """
