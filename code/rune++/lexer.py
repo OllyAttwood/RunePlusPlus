@@ -2,6 +2,7 @@ from token_types import TokenTypes as TT
 from token_ import Token
 from token_map import TOKEN_TYPE_DICT
 import number_converter
+from errors import RunePlusPlusError
 
 class Lexer:
     """
@@ -44,6 +45,8 @@ class Lexer:
             if number_type:
                 value = number_converter.from_runes_to_base10(text)
                 return Token(number_type, value)
+            else:
+                raise RunePlusPlusError("Tokenising error!")
 
     def is_a_number(self, text):
         """
