@@ -84,5 +84,30 @@ def test_get_token_with_invalid_inputs(input_text):
     with pytest.raises(RunePlusPlusError): # This makes the test fail if an error is not raised
         lexer.get_token(input_text)
 
-def test_lex():
-    pass
+@pytest.mark.parametrize(
+    "input_text, expected_tokens",
+    [
+        ("ᛁᛄᛁᛄ⋅ᚢ⋅ᛁᛄᛁ", ((TT.INT, 10), (TT.ADD, None), (TT.INT, 5))),
+        (
+            "ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ",
+            (
+                (TT.FLOAT, 2.5), (TT.MULTIPLY, None), (TT.LEFT_BRACKET, None),
+                (TT.INT, 5), (TT.MULTIPLY, None), (TT.INT, 5), (TT.ADD, None),
+                (TT.MINUS, None), (TT.INT, 5), (TT.RIGHT_BRACKET, None)
+            )
+        )
+    ]
+)
+def test_lex(input_text, expected_tokens):
+    """
+    Tests the lex() function by comparing the resulting tokens' contents with the
+    expected outputs
+    """
+    lexer = Lexer(input_text)
+    lexer.lex()
+
+    for output_token, (expected_token_type, expected_token_value) in zip(
+        lexer.tokens[0], expected_tokens
+    ):
+        assert output_token.token_type == expected_token_type
+        assert output_token.value == expected_token_value
