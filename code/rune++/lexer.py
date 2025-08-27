@@ -51,7 +51,7 @@ class Lexer:
         None
         """
 
-        if set(text) <= set(self.DIGITS + self.DECIMAL_POINT):
+        if set(text) <= set(self.DIGITS + self.DECIMAL_POINT) and text != "":
             num_decimal_points = text.count(self.DECIMAL_POINT)
             if num_decimal_points == 0:
                 return TT.INT
