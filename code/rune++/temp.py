@@ -1,6 +1,7 @@
 from lexer import Lexer
 from parser import Parser
 from evaluator import Evaluator
+from output_formatter import OutputFormatter
 
 """
 lexer = Lexer("ᚢ⋅ᛒ⋅ᛚ\nᚫ⋅ᚢ\nᛒ⋅ᛚ⋅ᚫ\nᚢ⋅ᛒ\nᛒᛁᛄᛁᛄ.ᛁ\nᚲ⋅ᛁ")
@@ -8,7 +9,7 @@ lexer.lex()
 print(lexer.tokens)
 """
 
-lexer = Lexer("ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ") # ᛁᛄ.ᛁᛄ * ( ᛁᛄᛁ * ᛁᛄᛁ + - ᛁᛄᛁ )
+lexer = Lexer("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ") # ᛁᛄ.ᛁᛄ * ( ᛁᛄᛁ * ᛁᛄᛁ + - ᛁᛄᛁ )
 lexer.lex()
 print(lexer.tokens)
 print("-------------------------------------------------")
@@ -23,6 +24,7 @@ result = evaluator.traverse()
 print(result)
 print("-------------------------------------------------")
 
-OUTPUT FORMATTER (convert back to runes)
-------------------------------------------------      TEST WITH MANY DIFFERENT OUTPUTS - IMPLEMENT PYTEST ALSO      -------------------------------------------------------
+formatter = OutputFormatter(result)
+formatted_result = formatter.format()
+print(formatted_result)
 print("-------------------------------------------------")

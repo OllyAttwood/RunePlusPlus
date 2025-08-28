@@ -113,6 +113,9 @@ def _from_base10_fractional_to_base2(base10_str):
     Converts the fractional part (after the decimal point) of a base 10 number to
     regular base 2 number (0-9 digits)
     """
+    if base10_str == "0":
+        return "0"
+
     base10_num = float("0." + base10_str)
 
     multiplier = 1
