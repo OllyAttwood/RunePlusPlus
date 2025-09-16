@@ -46,7 +46,7 @@ class Lexer:
                 value = number_converter.from_runes_to_base10(text)
                 return Token(number_type, value)
             # The identifier elif should always be the last if statement
-            elif set(text) <= set(VARIABLE_NAME_CHARS):
+            elif set(text) <= set(VARIABLE_NAME_CHARS) and text != "":
                 return Token(TT.VARIABLE_NAME, text)
             else:
                 raise RunePlusPlusError("Tokenising error!")
