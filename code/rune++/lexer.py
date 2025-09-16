@@ -1,6 +1,6 @@
 from token_types import TokenTypes as TT
 from token_ import Token
-from token_map import TOKEN_TYPE_DICT
+from token_map import TOKEN_TYPE_DICT, VARIABLE_NAME_CHARS
 import number_converter
 from errors import RunePlusPlusError
 
@@ -45,6 +45,9 @@ class Lexer:
             if number_type:
                 value = number_converter.from_runes_to_base10(text)
                 return Token(number_type, value)
+            # The identifier elif should always be the last if statement
+            elif set(text) <= set(VARIABLE_NAME_CHARS):
+                return Token(TT.VARIABLE_NAME, text)
             else:
                 raise RunePlusPlusError("Tokenising error!")
 

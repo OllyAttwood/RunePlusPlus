@@ -1,6 +1,7 @@
 from nodes import *
 from token_types import TokenTypes as TT
 import operator
+from errors import RunePlusPlusError
 
 class Evaluator:
     """
@@ -28,10 +29,12 @@ class Evaluator:
         self.node_to_function_dict = {
             NumberNode: self.process_number_node,
             BinaryOperationNode: self.process_binary_operation_node,
-            UnaryOperationNode: self.process_unary_operation_node
+            UnaryOperationNode: self.process_unary_operation_node,
+            VariableAssignmentNode: self.process_variable_assignment_node,
+            VariableReadNode: self.process_variable_read_node
         }
 
-    def traverse(self, node=None):
+    def traverse(self, context, node=None):
         """
         Traverses the given node, performing any necessary functions and recursively
         calling traverse() on any children nodes
@@ -42,34 +45,54 @@ class Evaluator:
             node = self.root_node
 
         node_function = self.node_to_function_dict[type(node)]
-        return node_function(node)
 
-    def process_number_node(self, node):
+        return node_function(context, node)
+
+    def process_number_node(self, context, node):
         """
         Returns the number value (integer or float) of the number node
         """
         return node.token.value
 
-    def process_binary_operation_node(self, node):
+    def process_binary_operation_node(self, context, node):
         """
         Runs any necessary computations on the binary operation node and recursively
         traverses the children nodes
         """
-        left_result = self.traverse(node.left_node)
-        right_result = self.traverse(node.right_node)
+        left_result = self.traverse(context, node.left_node)
+        right_result = self.traverse(context, node.right_node)
 
         return self.BINARY_TT_TO_FUNCTION_DICT[node.operator_token.token_type](
             left_result,
             right_result
         )
 
-    def process_unary_operation_node(self, node):
+    def process_unary_operation_node(self, context, node):
         """
         Runs any necessary computations on the number node and recursively traverses its
         child node
         """
-        operand_result = self.traverse(node.operand_node)
+        operand_result = self.traverse(context, node.operand_node)
 
         return self.UNARY_TT_TO_FUNCTION_DICT[node.operator_token.token_type](
             operand_result
         )
+
+    def process_variable_assignment_node(self, context, node):
+        """Assigns the value to the variable in the context's symbol table"""
+        variable_name = node.variable_name_token.value
+        value = self.traverse(context, node.value_node)
+
+        context.symbol_table.set(variable_name, value)
+
+        return value
+
+    def process_variable_read_node(self, context, node):
+        """Reads the value stored in the variable"""
+        variable_name = node.variable_name_token.value
+        read_value = context.symbol_table.get(variable_name)
+
+        if read_value is None:
+            raise RunePlusPlusError(f"Variable '{variable_name}' doesn't exist!")
+
+        return read_value

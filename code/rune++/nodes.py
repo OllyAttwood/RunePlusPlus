@@ -38,3 +38,25 @@ class UnaryOperationNode:
 
     def __repr__(self):
         return f"<UnaryOperationNode: {self.operator_token}, {self.operand_node}>"
+
+class VariableAssignmentNode:
+    """A node which represents a variable being assigned a value"""
+
+    def __init__(self, variable_name_token, value_node):
+        self.variable_name_token = variable_name_token
+        self.value_node = value_node
+
+    def __repr__(self):
+        return (
+            f"<VariableAssignmentNode: {self.variable_name_token}, "
+            f"{self.value_node}>"
+        )
+
+class VariableReadNode:
+    """A node which represents a variable's value being read"""
+
+    def __init__(self, variable_name_token):
+        self.variable_name_token = variable_name_token
+
+    def __repr__(self):
+        return f"<VariableReadNode: {self.variable_name_token}>"

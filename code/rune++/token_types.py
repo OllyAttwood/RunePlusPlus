@@ -18,6 +18,9 @@ class TokenTypes:
     LEFT_BRACKET = "LEFT_BRACKET"
     RIGHT_BRACKET = "RIGHT_BRACKET"
 
+    # Variables
+    VARIABLE_NAME = "VARIABLE_NAME"
+
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
     UNARY_OPERATORS = (MINUS)

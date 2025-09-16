@@ -26,6 +26,16 @@ class Parser:
         else:
             self.cur_token = self.tokens[self.cur_index]
 
+    def peek_next_token(self):
+        """
+        Returns the next token without updating self.cur_index and self.cur_token.
+        Returns None if there is no next token.
+        """
+        if self.cur_index + 1 >= len(self.tokens):
+            return None
+        else:
+            return self.tokens[self.cur_index + 1]
+
     def parse_line(self):
         """Calls parse_expression() but checks that the whole line has been parsed"""
         expression = self.parse_expression()
@@ -43,6 +53,23 @@ class Parser:
         Attempts to parse the current token(s) as an expression (add or subtract
         operation)
         """
+        # If there is a variable assignment, prioritise it. This is so 'a = 1 + 2' is
+        # treated as 'a = (1 + 2)' and not '(a = 1) + 2'
+        if (
+            self.cur_token.token_type == TT.VARIABLE_NAME
+            and self.peek_next_token() is not None
+            and self.peek_next_token().token_type == TT.ASSIGN
+        ):
+            var_name_token = self.cur_token
+            self.next_token()
+            self.next_token() # Skips the assignment token
+            expression = self.parse_expression()
+
+            return VariableAssignmentNode(
+                var_name_token,
+                expression
+            )
+
         return self.parse_binary_operation(self.parse_term, TT.EXPRESSION_OPERATORS)
 
     def parse_term(self):
@@ -104,3 +131,10 @@ class Parser:
             operand = self.parse_factor()
 
             return UnaryOperationNode(operand_token, operand)
+
+        # Variable being read
+        elif self.cur_token.token_type == TT.VARIABLE_NAME:
+            variable_read_node = VariableReadNode(self.cur_token)
+            self.next_token()
+
+            return variable_read_node

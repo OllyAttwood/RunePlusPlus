@@ -2,6 +2,7 @@ from lexer import Lexer
 from parser import Parser
 from evaluator import Evaluator
 from output_formatter import OutputFormatter
+from context import Context, SymbolTable
 
 """
 lexer = Lexer("ᚢ⋅ᛒ⋅ᛚ\nᚫ⋅ᚢ\nᛒ⋅ᛚ⋅ᚫ\nᚢ⋅ᛒ\nᛒᛁᛄᛁᛄ.ᛁ\nᚲ⋅ᛁ")
@@ -9,7 +10,9 @@ lexer.lex()
 print(lexer.tokens)
 """
 
-lexer = Lexer("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ") # ᛁᛄ.ᛁᛄ * ( ᛁᛄᛁ * ᛁᛄᛁ + - ᛁᛄᛁ )
+#lexer = Lexer("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ") # ᛁᛄ.ᛁᛄ * ( ᛁᛄᛁ * ᛁᛄᛁ + - ᛁᛄᛁ )
+lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ")
+#lexer = Lexer("ᛣᛠᛝᚹ")
 lexer.lex()
 print(lexer.tokens)
 print("-------------------------------------------------")
@@ -20,7 +23,9 @@ print(ast)
 print("-------------------------------------------------")
 
 evaluator = Evaluator(ast)
-result = evaluator.traverse()
+context = Context("global_context", symbol_table=SymbolTable())
+#context.symbol_table.symbols["ᛣᛠᛝᚹ"] = 69
+result = evaluator.traverse(context)
 print(result)
 print("-------------------------------------------------")
 

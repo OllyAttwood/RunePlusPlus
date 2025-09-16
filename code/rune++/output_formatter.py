@@ -32,6 +32,7 @@ class OutputFormatter:
                 is_negative = False
 
             new_output_str = number_converter.from_base10_to_runes(new_output_str)
+            print("@@@@@@@@@", self.original_output, new_output_str)
 
         # If negative, restore (rune version of) minus symbol
         if is_negative:

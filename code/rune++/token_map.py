@@ -18,3 +18,5 @@ def create_token_type_dict():
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()
+# All the characters that can be used in a variable name
+VARIABLE_NAME_CHARS = "ᚹᚱᛩᛄᛒᛚᚫᛐᛏᚳᛣᚴᚠᛉᚩᛠᛈᛕᛅᚾᛡᚲᚷᚸᛞᛁᛋᛟᛝᚺᚻᚢᛖᚿᛆᛧᛢ"
