@@ -21,21 +21,20 @@ class OutputFormatter:
 
         # If original is a number
         if isinstance(self.original_output, (int, float)):
-            new_output_str = str(self.original_output)
+            new_output = self.original_output
 
             # If negative, remove minus symbol for now, as number_converter doesn't
             # handle negatives
             if self.original_output < 0:
                 is_negative = True
-                new_output_str = new_output_str[1:]
+                new_output *= -1
             else:
                 is_negative = False
 
-            new_output_str = number_converter.from_base10_to_runes(new_output_str)
-            print("@@@@@@@@@", self.original_output, new_output_str)
+            new_output = number_converter.from_base10_to_runes(new_output)
 
         # If negative, restore (rune version of) minus symbol
         if is_negative:
-            new_output_str = self.FORMATTING_MAP["-"] + new_output_str
+            new_output = self.FORMATTING_MAP["-"] + new_output
 
-        return new_output_str
+        return new_output
