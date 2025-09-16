@@ -72,7 +72,7 @@ def test_get_token_with_valid_inputs(input_text, expected_token_type, expected_v
         " ",
         "abcd",
         "1234",
-        "ᛒᛁᛄᛁᛄ"
+        "ᛒᛁᛄᛁᛄ.ᛄᛁ" # Correct version would be "ᛒ⋅ᛁᛄᛁᛄ.ᛄᛁ" (two separate tokens)
     ]
 )
 def test_get_token_with_invalid_inputs(input_text):
