@@ -14,7 +14,13 @@ def create_token_type_dict():
         "ᚫ": TT.DIVIDE,
         "ᚲ": TT.ASSIGN,
         "ᚿ": TT.LEFT_BRACKET,
-        "ᛆ": TT.RIGHT_BRACKET
+        "ᛆ": TT.RIGHT_BRACKET,
+        "ᛅᚺᛣ": TT.LESS_THAN,
+        "ᛒᛖᛏ": TT.MORE_THAN,
+        "ᛖ": TT.EQUALS,
+        "ᛢ": TT.AND,
+        "ᛖᛏ": TT.OR,
+        "ᛉᛖᛚ": TT.NOT
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()

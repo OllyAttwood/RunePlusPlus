@@ -11,8 +11,10 @@ print(lexer.tokens)
 """
 
 #lexer = Lexer("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ") # ᛁᛄ.ᛁᛄ * ( ᛁᛄᛁ * ᛁᛄᛁ + - ᛁᛄᛁ )
-lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ")
-#lexer = Lexer("ᛣᛠᛝᚹ")
+#lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ") # Variable assignment test
+#lexer = Lexer("ᛣᛠᛝᚹ") # Variable access test
+lexer = Lexer("ᛁᛄᛁ⋅ᛖ⋅ᛁᛁ⋅ᚢ⋅ᛁᛄ") # Comparison operator test
+
 lexer.lex()
 print(lexer.tokens)
 print("-------------------------------------------------")
@@ -33,3 +35,41 @@ formatter = OutputFormatter(result)
 formatted_result = formatter.format()
 print(formatted_result)
 print("-------------------------------------------------")
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+MON   - variables
+	- <>is VarAssignNode needed? is returning raw data types ok, rather than Number etc?
+	- <> implement own version of VarAssignNode
+	- <> VarAccessNode
+	- implement a 'None' equivalent (not as a variable name, rather as a keyword?)
+	- <> number converter not handling 69 rather than 69.0
+	- <> fix failed tests
+	- <> add tests for number_converter.py?
+	- <> watch ep4 again to check everything is done
+
+TUES  - <> context
+	- <> understand it fully
+	- <> implement
+
+WEDS  - comparisons and logical operators
+	- <> can I use the token map for keywords instead of dedicated keyword management??
+	- <> implement lexer
+		- <> less than
+		- <> more than
+		- <> equals
+
+		- <> and
+		- <> or
+		- <> not
+	- <> do I need a dedicated != symbol, or is not(==) ok?
+	- I'm using the bitwise 'and' and 'or' functions - is this ok? I think so, so long as the operands are always booleans - could implement lambda functions instead for true and/or functionality?
+	- implement True/False characters (from input as well as program output)?
+	- <> TEST ALL FUNCTIONALITY
+
+THURS - if statements
+
+#################################################################################
+
+https://www.geeksforgeeks.org/python/dunder-magic-methods-python/

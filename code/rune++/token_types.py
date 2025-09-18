@@ -21,8 +21,20 @@ class TokenTypes:
     # Variables
     VARIABLE_NAME = "VARIABLE_NAME"
 
+    # Comparison operators
+    LESS_THAN = "LESS_THAN"
+    MORE_THAN = "MORE_THAN"
+    EQUALS = "EQUALS" # This is NOT the assignment operator
+
+    # Boolean operators
+    AND = "AND"
+    OR = "OR"
+    NOT = "NOT"
+
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
     UNARY_OPERATORS = (MINUS)
     EXPRESSION_OPERATORS = (ADD, MINUS)
     TERM_OPERATORS = (MULTIPLY, DIVIDE)
+    COMPARISON_OPERATORS = (LESS_THAN, MORE_THAN, EQUALS)
+    AND_OR_OPERATORS = (AND, OR) # Not including NOT

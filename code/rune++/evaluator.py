@@ -14,12 +14,18 @@ class Evaluator:
         TT.ADD: operator.add,
         TT.MINUS: operator.sub,
         TT.MULTIPLY: operator.mul,
-        TT.DIVIDE: operator.truediv
+        TT.DIVIDE: operator.truediv,
+        TT.LESS_THAN: operator.lt,
+        TT.MORE_THAN: operator.gt,
+        TT.EQUALS: operator.eq,
+        TT.AND: operator.and_, # Bitwise 'and', but should be fine for booleans
+        TT.OR: operator.or_ # Bitwise 'or', but should be fine for booleans
     }
 
     # Maps TokenType to functions for unary operations
     UNARY_TT_TO_FUNCTION_DICT = {
-        TT.MINUS: lambda num: operator.mul(num, -1) # negates the number
+        TT.MINUS: lambda num: operator.mul(num, -1), # negates the number
+        TT.NOT: operator.not_
     }
 
     def __init__(self, root_node):

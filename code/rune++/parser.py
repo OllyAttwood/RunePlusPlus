@@ -50,7 +50,7 @@ class Parser:
 
     def parse_expression(self):
         """
-        Attempts to parse the current token(s) as an expression (add or subtract
+        Attempts to parse the current token(s) as a boolean expression (AND or OR
         operation)
         """
         # If there is a variable assignment, prioritise it. This is so 'a = 1 + 2' is
@@ -70,6 +70,32 @@ class Parser:
                 expression
             )
 
+        return self.parse_binary_operation(
+            self.parse_comparison_expression,
+            TT.AND_OR_OPERATORS
+        )
+
+    def parse_comparison_expression(self):
+        """
+        Attempts to parse the current token(s) as a comparison expression (EQUALS,
+        LESS_THAN or MORE_THAN operation). Also handles the NOT token if present.
+        """
+        # If the NOT unary operator is present
+        if self.cur_token.token_type == TT.NOT:
+            not_token = self.cur_token
+            self.next_token()
+            return UnaryOperationNode(not_token, self.parse_comparison_expression())
+        else:
+            return self.parse_binary_operation(
+                self.parse_arithmetic_expression,
+                TT.COMPARISON_OPERATORS
+            )
+
+    def parse_arithmetic_expression(self):
+        """
+        Attempts to parse the current token(s) as an arithmetic expression (add or
+        minus operation)
+        """
         return self.parse_binary_operation(self.parse_term, TT.EXPRESSION_OPERATORS)
 
     def parse_term(self):
@@ -126,11 +152,11 @@ class Parser:
 
         # Unary operators (negative numbers etc)
         elif self.cur_token.token_type in TT.UNARY_OPERATORS:
-            operand_token = self.cur_token
+            operator_token = self.cur_token
             self.next_token()
             operand = self.parse_factor()
 
-            return UnaryOperationNode(operand_token, operand)
+            return UnaryOperationNode(operator_token, operand)
 
         # Variable being read
         elif self.cur_token.token_type == TT.VARIABLE_NAME:
