@@ -20,7 +20,11 @@ def create_token_type_dict():
         "ᛖ": TT.EQUALS,
         "ᛢ": TT.AND,
         "ᛖᛏ": TT.OR,
-        "ᛉᛖᛚ": TT.NOT
+        "ᛉᛖᛚ": TT.NOT,
+        "ᛁᛩ": TT.IF,
+        "ᚺᛅᛁᛩ": TT.ELIF,
+        "ᚺᛅᛣ": TT.ELSE,
+        "⋮": TT.CONTROL_FLOW_TERMINATOR
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()

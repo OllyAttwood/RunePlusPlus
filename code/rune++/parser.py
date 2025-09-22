@@ -111,7 +111,7 @@ class Parser:
         operand_function is the function to parse the tokens on each side of the
             operator.
         operators is the applicable operators for this binary operation (add/subtract or
-            mmultiply/divide).
+            multiply/divide).
         """
         left_node = operand_function()
 
@@ -164,3 +164,55 @@ class Parser:
             self.next_token()
 
             return variable_read_node
+
+        # If statement
+        elif self.cur_token.token_type == TT.IF:
+            return self.parse_if_expression()
+
+    def parse_if_expression(self):
+        """
+        Attempts to parse the current tokens as an if statement, including possible elif
+        and else cases
+        """
+        if_cases = []
+        else_case = None
+
+        # Inital if case
+        if_first_case = self.parse_single_if_case()
+        if_cases.append(if_first_case)
+
+        # Loops through all elif cases
+        while self.cur_token.token_type == TT.ELIF:
+            elif_case = self.parse_single_if_case()
+            if_cases.append(elif_case)
+
+        # Else case
+        if self.cur_token is not None and self.cur_token.token_type == TT.ELSE:
+            else_case = self.parse_single_else_case()
+
+        return IfStatementNode(if_cases, else_case)
+
+    def parse_single_if_case(self):
+        """
+        Attempts to parse a single if/elif case (NOT to be used for else cases) and
+        return the condition and body as a tuple
+        """
+        self.next_token() # Skips IF/ELIF token
+        if_condition = self.parse_expression()
+
+        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
+            raise RunePlusPlusError(f"Expected '⋮', instead found {self.cur_token}")
+
+        self.next_token()
+        if_body = self.parse_expression()
+
+        return (if_condition, if_body)
+
+    def parse_single_else_case(self):
+        """
+        Attempts to parse a single else case and return the body
+        """
+        self.next_token() # Skips ELSE token
+        else_body = self.parse_expression()
+
+        return else_body

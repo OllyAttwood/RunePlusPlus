@@ -31,6 +31,12 @@ class TokenTypes:
     OR = "OR"
     NOT = "NOT"
 
+    # Control flow
+    IF = "IF"
+    ELIF = "ELIF"
+    ELSE = "ELSE"
+    CONTROL_FLOW_TERMINATOR = "CONTROL_FLOW_TERMINATOR"
+
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
     UNARY_OPERATORS = (MINUS)

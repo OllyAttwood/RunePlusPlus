@@ -60,3 +60,18 @@ class VariableReadNode:
 
     def __repr__(self):
         return f"<VariableReadNode: {self.variable_name_token}>"
+
+class IfStatementNode:
+    """
+    A node which represents an if statement (initial if as well as accompanying elifs
+    and else)
+    """
+
+    def __init__(self, if_cases, else_case=None):
+        self.if_cases = if_cases
+        self.else_case = else_case
+
+    def __repr__(self):
+        else_str = "" if self.else_case is None else f", {self.else_case}"
+
+        return f"<IfStatementNode: {self.if_cases}{else_str}>"

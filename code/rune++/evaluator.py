@@ -37,7 +37,8 @@ class Evaluator:
             BinaryOperationNode: self.process_binary_operation_node,
             UnaryOperationNode: self.process_unary_operation_node,
             VariableAssignmentNode: self.process_variable_assignment_node,
-            VariableReadNode: self.process_variable_read_node
+            VariableReadNode: self.process_variable_read_node,
+            IfStatementNode: self.process_if_statement_node
         }
 
     def traverse(self, context, node=None):
@@ -102,3 +103,14 @@ class Evaluator:
             raise RunePlusPlusError(f"Variable '{variable_name}' doesn't exist!")
 
         return read_value
+
+    def process_if_statement_node(self, context, node):
+        """Runs the if statement"""
+        for condition, body in node.if_cases:
+            condition_result = self.traverse(context, condition)
+
+            if condition_result:
+                 return self.traverse(context, body)
+
+        if node.else_case:
+            return self.traverse(context, node.else_case)
