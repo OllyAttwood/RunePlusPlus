@@ -75,3 +75,13 @@ class IfStatementNode:
         else_str = "" if self.else_case is None else f", {self.else_case}"
 
         return f"<IfStatementNode: {self.if_cases}{else_str}>"
+
+class WhileNode:
+    """A node which represents a while loop"""
+
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body
+
+    def __repr__(self):
+        return f"<WhileNode: {self.condition}, {self.body}>"

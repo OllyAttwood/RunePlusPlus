@@ -38,7 +38,8 @@ class Evaluator:
             UnaryOperationNode: self.process_unary_operation_node,
             VariableAssignmentNode: self.process_variable_assignment_node,
             VariableReadNode: self.process_variable_read_node,
-            IfStatementNode: self.process_if_statement_node
+            IfStatementNode: self.process_if_statement_node,
+            WhileNode: self.process_while_node
         }
 
     def traverse(self, context, node=None):
@@ -114,3 +115,15 @@ class Evaluator:
 
         if node.else_case:
             return self.traverse(context, node.else_case)
+
+    def process_while_node(self, context, node):
+        """
+        Runs the while loop until the condition is no longer met. I originally tried
+        implementing while loops without calling Python's 'while' keyword directly (to
+        avoid being just a reskin of Python), however using recursion means that there
+        is a limit to how many iterations can be performed. Therefore I've just used a
+        while loop.
+        """
+        while self.traverse(context, node.condition):
+            # Run the body of the loop
+            self.traverse(context, node.body)

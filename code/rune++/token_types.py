@@ -36,6 +36,7 @@ class TokenTypes:
     ELIF = "ELIF"
     ELSE = "ELSE"
     CONTROL_FLOW_TERMINATOR = "CONTROL_FLOW_TERMINATOR"
+    WHILE = "WHILE"
 
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)

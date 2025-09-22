@@ -169,6 +169,10 @@ class Parser:
         elif self.cur_token.token_type == TT.IF:
             return self.parse_if_expression()
 
+        # While loop
+        elif self.cur_token.token_type == TT.WHILE:
+            return self.parse_while_expression()
+
     def parse_if_expression(self):
         """
         Attempts to parse the current tokens as an if statement, including possible elif
@@ -216,3 +220,16 @@ class Parser:
         else_body = self.parse_expression()
 
         return else_body
+
+    def parse_while_expression(self):
+        """Attempts to parse a while loop"""
+        self.next_token() # Skips WHILE token
+        while_condition = self.parse_expression()
+
+        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
+            raise RunePlusPlusError(f"Expected '⋮', instead found {self.cur_token}")
+
+        self.next_token()
+        while_body = self.parse_expression()
+
+        return WhileNode(while_condition, while_body)

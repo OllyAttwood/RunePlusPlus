@@ -15,7 +15,8 @@ print(lexer.tokens)
 #lexer = Lexer("ᛣᛠᛝᚹ") # Variable access test
 #lexer = Lexer("ᛁᛄᛁ⋅ᛖ⋅ᛁᛁ⋅ᚢ⋅ᛁᛄ") # Comparison operator test
 #lexer = Lexer("ᚸ⋅ᛖᛏ⋅ᚷ") # Boolean data type test
-lexer = Lexer("ᛁᛩ⋅ᚷ⋅⋮⋅ᛁ⋅ᚺᛅᛁᛩ⋅ᚷ⋅⋮⋅ᛁᛄ⋅ᚺᛅᛣ⋅ᛁᛁ") # If statement test
+#lexer = Lexer("ᛁᛩ⋅ᚷ⋅⋮⋅ᛁ⋅ᚺᛅᛁᛩ⋅ᚷ⋅⋮⋅ᛁᛄ⋅ᚺᛅᛣ⋅ᛁᛁ") # If statement test
+lexer = Lexer("ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄᛄ⋅⋮⋅ᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ") # While loop test
 
 lexer.lex()
 print(lexer.tokens)
