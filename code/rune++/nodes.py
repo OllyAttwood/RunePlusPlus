@@ -85,3 +85,14 @@ class WhileNode:
 
     def __repr__(self):
         return f"<WhileNode: {self.condition}, {self.body}>"
+
+class FunctionDefinitionNode:
+    """A node which represents a function definition"""
+
+    def __init__(self, name_token, parameter_tokens, body_node):
+        self.name_token = name_token
+        self.parameter_tokens = parameter_tokens
+        self.body_node = body_node
+
+    def __repr__(self):
+        return f"<FunctionDefinitionNode: {self.name_token}, {self.parameter_tokens}>"

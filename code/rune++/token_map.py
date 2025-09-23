@@ -25,7 +25,9 @@ def create_token_type_dict():
         "ᚺᛅᛁᛩ": TT.ELIF,
         "ᚺᛅᛣ": TT.ELSE,
         "⋮": TT.CONTROL_FLOW_TERMINATOR,
-        "ᛞ": TT.WHILE
+        "ᛞ": TT.WHILE,
+        "ᛩᛟᛉᚴ": TT.FUNCTION_DEFINITION,
+        "ᛧ": TT.COMMA
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()

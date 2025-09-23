@@ -173,6 +173,10 @@ class Parser:
         elif self.cur_token.token_type == TT.WHILE:
             return self.parse_while_expression()
 
+        # Function definition
+        elif self.cur_token.token_type == TT.FUNCTION_DEFINITION:
+            return self.parse_function_definition()
+
     def parse_if_expression(self):
         """
         Attempts to parse the current tokens as an if statement, including possible elif
@@ -233,3 +237,49 @@ class Parser:
         while_body = self.parse_expression()
 
         return WhileNode(while_condition, while_body)
+
+    def parse_function_definition(self):
+        """
+        Attempts to parse a function definition, including parameters which may or may
+        not be included
+        """
+        parameter_name_tokens = []
+        self.next_token() # Skip 'function' keyword
+        function_variable_name_token = self.cur_token
+
+        if function_variable_name_token.token_type != TT.VARIABLE_NAME:
+            raise RunePlusPlusError("Function name not provided!")
+
+        self.next_token()
+
+        # Check for first parameter
+        if self.cur_token.token_type == TT.VARIABLE_NAME:
+            parameter_name_tokens.append(self.cur_token)
+            self.next_token()
+
+            # Check for extra function parameters
+            while self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
+                if self.cur_token.token_type != TT.COMMA:
+                    raise RunePlusPlusError(
+                        "Comma expected to separate function parameters!"
+                    )
+
+                self.next_token()
+
+                if self.cur_token.token_type != TT.VARIABLE_NAME:
+                    raise RunePlusPlusError("Parameter name expected!")
+
+                parameter_name_tokens.append(self.cur_token)
+                self.next_token()
+
+        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
+            raise RunePlusPlusError("Control flow terminator (⋮) expected!")
+
+        self.next_token() # Skip CONTROL_FLOW_TERMINATOR token
+        body_node = self.parse_expression()
+
+        return FunctionDefinitionNode(
+            function_variable_name_token,
+            parameter_name_tokens,
+            body_node
+        )

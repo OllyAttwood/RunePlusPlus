@@ -39,7 +39,8 @@ class Evaluator:
             VariableAssignmentNode: self.process_variable_assignment_node,
             VariableReadNode: self.process_variable_read_node,
             IfStatementNode: self.process_if_statement_node,
-            WhileNode: self.process_while_node
+            WhileNode: self.process_while_node,
+            FunctionDefinitionNode: self.process_function_definition_node
         }
 
     def traverse(self, context, node=None):
@@ -127,3 +128,7 @@ class Evaluator:
         while self.traverse(context, node.condition):
             # Run the body of the loop
             self.traverse(context, node.body)
+
+    def process_function_definition_node(self, context, node):
+        "Saves the FunctionDefinitionNode as a variable in the symbol table"
+        context.symbol_table.set(node.name_token.value, node)

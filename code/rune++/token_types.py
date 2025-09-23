@@ -38,6 +38,12 @@ class TokenTypes:
     CONTROL_FLOW_TERMINATOR = "CONTROL_FLOW_TERMINATOR"
     WHILE = "WHILE"
 
+    # Functions
+    FUNCTION_DEFINITION = "FUNCTION_DEFINITION"
+
+    # Other
+    COMMA = "COMMA"
+
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
     UNARY_OPERATORS = (MINUS)
