@@ -138,6 +138,13 @@ class Parser:
 
             return num_node
 
+        # Strings
+        elif self.cur_token.token_type == TT.STRING:
+            str_node = StringNode(self.cur_token)
+            self.next_token()
+
+            return str_node
+
         # Brackets
         elif self.cur_token.token_type == TT.LEFT_BRACKET:
             self.next_token()

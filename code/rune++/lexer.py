@@ -12,6 +12,7 @@ class Lexer:
     SEPARATOR = "⋅"
     DIGITS = "ᛄᛁ"
     DECIMAL_POINT = "."
+    STRING_SYMBOL = "ᛧᛧ"
 
     def __init__(self, text):
         self.text = text
@@ -45,6 +46,16 @@ class Lexer:
             if number_type:
                 value = number_converter.from_runes_to_base10(text)
                 return Token(number_type, value)
+            # String check
+            elif (
+                len(text) >= len(self.STRING_SYMBOL) * 2
+                and text.startswith(self.STRING_SYMBOL)
+                and text.endswith(self.STRING_SYMBOL)
+            ):
+                text_without_str_symbols = text[
+                    len(self.STRING_SYMBOL) : -len(self.STRING_SYMBOL)
+                ]
+                return Token(TT.STRING, text_without_str_symbols)
             # The identifier elif should always be the last if statement
             elif set(text) <= set(VARIABLE_NAME_CHARS) and text != "":
                 return Token(TT.VARIABLE_NAME, text)

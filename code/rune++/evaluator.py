@@ -42,7 +42,8 @@ class Evaluator:
             IfStatementNode: self.process_if_statement_node,
             WhileNode: self.process_while_node,
             FunctionDefinitionNode: self.process_function_definition_node,
-            FunctionCallNode: self.process_function_call_node
+            FunctionCallNode: self.process_function_call_node,
+            StringNode: self.process_string_node
         }
 
     def traverse(self, context, node=None):
@@ -157,3 +158,7 @@ class Evaluator:
 
         # run the function's code with the parameter values
         return self.traverse(function_context, function_definition_node.body_node)
+
+    def process_string_node(self, context, node):
+        """Returns the string value from the StringNode's token"""
+        return node.token.value

@@ -5,6 +5,9 @@ class TokenTypes:
     INT = "INT"
     FLOAT = "FLOAT"
 
+    # String
+    STRING = "STRING"
+
     # Arithmetic operators
     ADD = "ADD"
     MINUS = "MINUS"

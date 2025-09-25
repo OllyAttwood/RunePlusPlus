@@ -106,3 +106,12 @@ class FunctionCallNode:
 
     def __repr__(self):
         return f"<FunctionCallNode: {self.name_token}, {self.parameter_nodes}>"
+
+class StringNode:
+    """A node which contains only a string"""
+
+    def __init__(self, token):
+        self.token = token
+
+    def __repr__(self):
+        return f"<StringNode: {self.token}>"
