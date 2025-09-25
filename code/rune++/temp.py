@@ -35,10 +35,32 @@ context.symbol_table.set("ᚷ", False)
 context.symbol_table.set("ᚸ", True)
 #context.symbol_table.symbols["ᛣᛠᛝᚹ"] = 69
 result = evaluator.traverse(context)
+result = 0 # Placeholder to avoid OutputFormatter error
 print(result)
 print("-------------------------------------------------")
 
 formatter = OutputFormatter(result)
 formatted_result = formatter.format()
 print(formatted_result)
+
+print("-----------------------------------------------------------------------------------------------------------------")
+
+lexer = Lexer("ᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ") # Function declaration test
+
+lexer.lex()
+print(lexer.tokens)
 print("-------------------------------------------------")
+
+parser = Parser(lexer.tokens[0])
+ast = parser.parse_line()
+print(ast)
+print("-------------------------------------------------")
+
+evaluator = Evaluator(ast)
+result = evaluator.traverse(context)
+print(result)
+print("-------------------------------------------------")
+
+formatter = OutputFormatter(result)
+formatted_result = formatter.format()
+print(formatted_result)

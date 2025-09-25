@@ -2,6 +2,7 @@ from nodes import *
 from token_types import TokenTypes as TT
 import operator
 from errors import RunePlusPlusError
+from context import Context, SymbolTable
 
 class Evaluator:
     """
@@ -40,7 +41,8 @@ class Evaluator:
             VariableReadNode: self.process_variable_read_node,
             IfStatementNode: self.process_if_statement_node,
             WhileNode: self.process_while_node,
-            FunctionDefinitionNode: self.process_function_definition_node
+            FunctionDefinitionNode: self.process_function_definition_node,
+            FunctionCallNode: self.process_function_call_node
         }
 
     def traverse(self, context, node=None):
@@ -132,3 +134,26 @@ class Evaluator:
     def process_function_definition_node(self, context, node):
         "Saves the FunctionDefinitionNode as a variable in the symbol table"
         context.symbol_table.set(node.name_token.value, node)
+
+    def process_function_call_node(self, context, node):
+        "Calls the function with the given parameters (if any)"
+        function_variable_name_token = node.name_token
+        function_variable_name_str = function_variable_name_token.value
+        function_definition_node = context.symbol_table.get(function_variable_name_str)
+
+        if len(node.parameter_nodes) != len(function_definition_node.parameter_tokens):
+            raise RunePlusPlusError("Incorrect number of parameters provided!")
+
+        function_context = Context(
+            function_variable_name_str,
+            parent_context=context
+        )
+
+        # Resolve all parameter values and add them to the function's symbol table
+        for parameter_node, parameter_token in zip(node.parameter_nodes, function_definition_node.parameter_tokens):
+            parameter_name = parameter_token.value
+            new_parameter_value = self.traverse(context, parameter_node)
+            function_context.symbol_table.set(parameter_name, new_parameter_value)
+
+        # run the function's code with the parameter values
+        return self.traverse(function_context, function_definition_node.body_node)

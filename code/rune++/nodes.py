@@ -96,3 +96,13 @@ class FunctionDefinitionNode:
 
     def __repr__(self):
         return f"<FunctionDefinitionNode: {self.name_token}, {self.parameter_tokens}>"
+
+class FunctionCallNode:
+    """A node which represents a function call"""
+
+    def __init__(self, name_token, parameter_nodes):
+        self.name_token = name_token
+        self.parameter_nodes = parameter_nodes
+
+    def __repr__(self):
+        return f"<FunctionCallNode: {self.name_token}, {self.parameter_nodes}>"

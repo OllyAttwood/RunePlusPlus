@@ -158,6 +158,14 @@ class Parser:
 
             return UnaryOperationNode(operator_token, operand)
 
+        # Function call
+        elif (
+            self.cur_token.token_type == TT.VARIABLE_NAME
+            and self.peek_next_token() != None
+            and self.peek_next_token().token_type == TT.LEFT_BRACKET
+        ):
+            return self.parse_function_call()
+
         # Variable being read
         elif self.cur_token.token_type == TT.VARIABLE_NAME:
             variable_read_node = VariableReadNode(self.cur_token)
@@ -283,3 +291,35 @@ class Parser:
             parameter_name_tokens,
             body_node
         )
+
+    def parse_function_call(self):
+        """Attempts to parse a function call"""
+        function_variable_name_token = self.cur_token
+        parameter_nodes = []
+        self.next_token()
+
+        if self.cur_token.token_type != TT.LEFT_BRACKET:
+            raise RunePlusPlusError("Left bracket expected for a function call!")
+
+        self.next_token()
+
+        # If no parameters included
+        if self.cur_token.token_type == TT.RIGHT_BRACKET:
+            self.next_token()
+        # If there are parameters
+        else:
+            parameter_nodes.append(self.parse_expression())
+
+            while self.cur_token.token_type == TT.COMMA:
+                self.next_token() # Skip comma
+                new_parameter_node = self.parse_expression()
+                parameter_nodes.append(new_parameter_node)
+
+            if self.cur_token.token_type != TT.RIGHT_BRACKET:
+                raise RunePlusPlusError(
+                    "Expected a closing bracket with the function call!"
+                )
+
+            self.next_token()
+
+        return FunctionCallNode(function_variable_name_token, parameter_nodes)

@@ -10,6 +10,11 @@ class Context:
         self.symbol_table = symbol_table
         self.parent_context = parent_context
 
+        if parent_context is not None and symbol_table is None:
+            # An empty symbol table which has the parent context's symbol table as its
+            # parent
+            self.symbol_table = SymbolTable(parent_context.symbol_table)
+
 
 class SymbolTable:
     """
