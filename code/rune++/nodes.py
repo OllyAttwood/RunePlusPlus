@@ -115,3 +115,12 @@ class StringNode:
 
     def __repr__(self):
         return f"<StringNode: {self.token}>"
+
+class ListNode:
+    """A node which represents a list of elements of any type"""
+
+    def __init__(self, element_nodes):
+        self.element_nodes = element_nodes
+
+    def __repr__(self):
+        return f"<ListNode: {self.element_nodes}>"

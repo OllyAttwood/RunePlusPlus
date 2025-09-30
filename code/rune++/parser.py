@@ -157,6 +157,10 @@ class Parser:
 
             return expression
 
+        # Square brackets
+        elif self.cur_token.token_type == TT.LEFT_SQUARE_BRACKET:
+            return self.parse_list()
+
         # Unary operators (negative numbers etc)
         elif self.cur_token.token_type in TT.UNARY_OPERATORS:
             operator_token = self.cur_token
@@ -330,3 +334,27 @@ class Parser:
             self.next_token()
 
         return FunctionCallNode(function_variable_name_token, parameter_nodes)
+
+    def parse_list(self):
+        element_nodes = []
+        self.next_token() # Skip opening bracket
+
+        if self.cur_token.token_type != TT.RIGHT_SQUARE_BRACKET:
+            element_nodes.append(self.parse_expression()) # First element
+
+            # All subsequent elements
+            while (
+                self.cur_token is not None
+                and self.cur_token.token_type == TT.COMMA
+            ):
+                self.next_token()
+                element_nodes.append(self.parse_expression())
+
+            if (
+                self.cur_token is None
+                or self.cur_token.token_type != TT.RIGHT_SQUARE_BRACKET
+            ):
+                raise RunePlusPlusError("List parsing error!")
+
+        self.next_token()
+        return ListNode(element_nodes)

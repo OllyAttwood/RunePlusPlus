@@ -28,7 +28,9 @@ def create_token_type_dict():
         "ᛞ": TT.WHILE,
         "ᛩᛟᛉᚴ": TT.FUNCTION_DEFINITION,
         "ᛧ": TT.COMMA,
-        "ᛧᛧ": TT.STRING
+        "ᛧᛧ": TT.STRING,
+        "ᚺ": TT.LEFT_SQUARE_BRACKET,
+        "ᚻ": TT.RIGHT_SQUARE_BRACKET
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()

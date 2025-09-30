@@ -43,7 +43,8 @@ class Evaluator:
             WhileNode: self.process_while_node,
             FunctionDefinitionNode: self.process_function_definition_node,
             FunctionCallNode: self.process_function_call_node,
-            StringNode: self.process_string_node
+            StringNode: self.process_string_node,
+            ListNode: self.process_list_node
         }
 
     def traverse(self, context, node=None):
@@ -162,3 +163,13 @@ class Evaluator:
     def process_string_node(self, context, node):
         """Returns the string value from the StringNode's token"""
         return node.token.value
+
+    def process_list_node(self, context, node):
+        """Returns the corresponding list"""
+        traversed_list = []
+
+        # Traverse all list elements
+        for element_node in node.element_nodes:
+            traversed_list.append(self.traverse(context, element_node))
+
+        return traversed_list
