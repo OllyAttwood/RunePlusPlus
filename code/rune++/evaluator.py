@@ -20,7 +20,8 @@ class Evaluator:
         TT.MORE_THAN: operator.gt,
         TT.EQUALS: operator.eq,
         TT.AND: operator.and_, # Bitwise 'and', but should be fine for booleans
-        TT.OR: operator.or_ # Bitwise 'or', but should be fine for booleans
+        TT.OR: operator.or_, # Bitwise 'or', but should be fine for booleans
+        TT.LIST_INDEXER: operator.getitem
     }
 
     # Maps TokenType to functions for unary operations

@@ -102,7 +102,11 @@ class Parser:
         """
         Attempts to parse the current token(s) as a term (multiply or divide operation)
         """
-        return self.parse_binary_operation(self.parse_factor, TT.TERM_OPERATORS)
+        return self.parse_binary_operation(self.parse_list_indexing_expression, TT.TERM_OPERATORS)
+
+    def parse_list_indexing_expression(self):
+        """Attempts to parse the current token(s) as a list indexing expression"""
+        return self.parse_binary_operation(self.parse_factor, [TT.LIST_INDEXER])
 
     def parse_binary_operation(self, operand_function, operators):
         """

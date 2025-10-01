@@ -30,7 +30,8 @@ def create_token_type_dict():
         "ᛧ": TT.COMMA,
         "ᛧᛧ": TT.STRING,
         "ᚺ": TT.LEFT_SQUARE_BRACKET,
-        "ᚻ": TT.RIGHT_SQUARE_BRACKET
+        "ᚻ": TT.RIGHT_SQUARE_BRACKET,
+        "ᛝ": TT.LIST_INDEXER
     }
 
 TOKEN_TYPE_DICT = create_token_type_dict()
