@@ -3,6 +3,7 @@ from token_types import TokenTypes as TT
 import operator
 from errors import RunePlusPlusError
 from context import Context, SymbolTable
+import native_functions
 
 class Evaluator:
     """
@@ -142,24 +143,42 @@ class Evaluator:
         "Calls the function with the given parameters (if any)"
         function_variable_name_token = node.name_token
         function_variable_name_str = function_variable_name_token.value
-        function_definition_node = context.symbol_table.get(function_variable_name_str)
-
-        if len(node.parameter_nodes) != len(function_definition_node.parameter_tokens):
-            raise RunePlusPlusError("Incorrect number of parameters provided!")
-
         function_context = Context(
             function_variable_name_str,
             parent_context=context
         )
 
-        # Resolve all parameter values and add them to the function's symbol table
-        for parameter_node, parameter_token in zip(node.parameter_nodes, function_definition_node.parameter_tokens):
-            parameter_name = parameter_token.value
-            new_parameter_value = self.traverse(context, parameter_node)
-            function_context.symbol_table.set(parameter_name, new_parameter_value)
+        # Check if a built-in function has been called - if so, it needs to be executed
+        # differently
+        built_in_function = native_functions.get_function_from_name(
+            function_variable_name_str
+        )
 
-        # run the function's code with the parameter values
-        return self.traverse(function_context, function_definition_node.body_node)
+        if built_in_function:
+            # Resolve all parameter values before running the built-in function
+            parameter_values = []
+
+            for parameter_node in node.parameter_nodes:
+                new_parameter_value = self.traverse(context, parameter_node)
+                parameter_values.append(new_parameter_value)
+
+            # Execute the built-in function with the resolved paramters
+            return built_in_function(*parameter_values)
+        # If function is not built-in
+        else:
+            function_definition_node = context.symbol_table.get(function_variable_name_str)
+
+            if len(node.parameter_nodes) != len(function_definition_node.parameter_tokens):
+                raise RunePlusPlusError("Incorrect number of parameters provided!")
+
+                # Resolve all parameter values and add them to the function's symbol table
+            for parameter_node, parameter_token in zip(node.parameter_nodes, function_definition_node.parameter_tokens):
+                parameter_name = parameter_token.value
+                new_parameter_value = self.traverse(context, parameter_node)
+                function_context.symbol_table.set(parameter_name, new_parameter_value)
+
+            # run the function's code with the parameter values
+            return self.traverse(function_context, function_definition_node.body_node)
 
     def process_string_node(self, context, node):
         """Returns the string value from the StringNode's token"""
