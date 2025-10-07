@@ -34,6 +34,15 @@ def create_token_type_dict():
         "ᛝ": TT.LIST_INDEXER
     }
 
+def create_reverse_token_type_dict(original_dict):
+    """
+    Creates a reversed version of the dictionary so that the original keys can be
+    accessed from their values
+    """
+
+    return {value: key for key, value in original_dict.items()}
+
 TOKEN_TYPE_DICT = create_token_type_dict()
+REVERSE_TOKEN_TYPE_DICT = create_reverse_token_type_dict(TOKEN_TYPE_DICT)
 # All the characters that can be used in a variable name
 VARIABLE_NAME_CHARS = "ᚹᚱᛩᛄᛒᛚᚫᛐᛏᚳᛣᚴᚠᛉᚩᛠᛈᛕᛅᚾᛡᚲᚷᚸᛞᛁᛋᛟᛝᚺᚻᚢᛖᚿᛆᛧᛢ"

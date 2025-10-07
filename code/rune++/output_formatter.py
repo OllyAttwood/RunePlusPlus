@@ -1,5 +1,7 @@
 import number_converter
 import token_map
+from token_types import TokenTypes as TT
+from lexer import Lexer
 
 class OutputFormatter:
     """
@@ -65,8 +67,15 @@ def list_to_str(original_list):
     Converts a list into a correctly formatted string representation (also has to format
     each element)
     """
-    comma_and_separators = "⋅ᛧ⋅"
-    rune_str = "ᚺ⋅"
+    comma_char = token_map.REVERSE_TOKEN_TYPE_DICT[TT.COMMA]
+    separator_char = Lexer.SEPARATOR
+    comma_and_separators = f"{separator_char}{comma_char}{separator_char}"
+    left_square_bracket_char = token_map.REVERSE_TOKEN_TYPE_DICT[TT.LEFT_SQUARE_BRACKET]
+    right_square_bracket_char = token_map.REVERSE_TOKEN_TYPE_DICT[
+        TT.RIGHT_SQUARE_BRACKET
+    ]
+
+    rune_str = f"{left_square_bracket_char}{separator_char}"
 
     for element in original_list:
         new_formatter = OutputFormatter(element)
@@ -76,6 +85,6 @@ def list_to_str(original_list):
     if len(original_list) > 0:
         rune_str = rune_str[:-len(comma_and_separators)]
 
-    rune_str += "⋅ᚻ"
+    rune_str += f"{separator_char}{right_square_bracket_char}"
 
     return rune_str
