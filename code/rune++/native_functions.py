@@ -1,10 +1,12 @@
 """Functions provided by the programming language to provide core functionality"""
 from inspect import getmembers, isfunction
 import sys
+from output_formatter import OutputFormatter
 
-def ᚹᛏᛁᛉᛚ(x):
+def ᚹᛏᛁᛉᛚ(to_print):
     "The print function"
-    print(x)
+    formatted = OutputFormatter(to_print).format()
+    print(formatted)
 
 def get_function_from_name(function_name):
     """
