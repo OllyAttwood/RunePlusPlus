@@ -121,7 +121,7 @@ def test_pipeline_valid_multi_commands(
 
 def test_print_function(capsys):
     """
-    Function to test the programming languages print function. This is needed as a
+    Function to test the programming language's print function. This is needed as a
     separate unit test as we are testing for what was printed rather than what was
     returned. capsys is imported to capture the sys.stdout.
     """
@@ -130,3 +130,14 @@ def test_print_function(capsys):
     printed_output = capsys.readouterr().out
 
     assert printed_output == "ᛁᛄᛁ\n" #/n is needed as that is included by print()
+
+def test_input_function(monkeypatch):
+    """
+    Function to test the programming language's input function. This is needed as a
+    separate unit test as Python's input() function needs mocking (monkeypatching).
+    """
+    monkeypatch.setattr("builtins.input", lambda _: "ᛣᛐᛒᛝ")
+    command_str = "ᛁᛉᚹ⋅ᚿ⋅ᛧᛧᛁᛉᚹᛟᛚᛧᛧ⋅ᛆ" # Input function is called with some prompt text
+    raw_result, formatted_result = run_command(command_str)
+
+    assert raw_result == formatted_result == "ᛣᛐᛒᛝ"
