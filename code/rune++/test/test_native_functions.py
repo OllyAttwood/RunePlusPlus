@@ -66,3 +66,32 @@ def test_input_function_invalid(monkeypatch, to_input):
 
     with pytest.raises(RunePlusPlusError):
         native_functions.ᛁᛉᚹ(to_input)
+
+@pytest.mark.parametrize(
+    "str_input, expected_output",
+    [
+        ("ᛁᛄᛁ", 5),
+        ("ᛁᛁᛁᛄ.ᛄᛁ", 14.25)
+    ]
+)
+def test_str_to_num_function_valid(str_input, expected_output):
+    """Tests the num function (string to int/float) with valid inputs"""
+    result = native_functions.ᛉᛟᛒ(str_input)
+
+    assert result == expected_output
+    assert type(result) == type(expected_output)
+
+@pytest.mark.parametrize(
+    "str_input",
+    [
+        "ᛁᛁᛁᛄ.ᛄ.ᛁ",
+        "ᛁᛁᛁᛄ.ᛄᛟᛁ"
+    ]
+)
+def test_str_to_num_function_invalid(str_input):
+    """
+    Tests the num function (string to int/float) with invalid inputs, so an error should
+    be raised
+    """
+    with pytest.raises(RunePlusPlusError):
+        native_functions.ᛉᛟᛒ(str_input)

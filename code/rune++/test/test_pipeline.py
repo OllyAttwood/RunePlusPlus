@@ -63,7 +63,8 @@ def run_command(str, context=None, return_context=False):
         ("ᛧᛧᛩᛟᛉᚴᛧᛧ⋅ᚢ⋅ᛧᛧᛒᛒᛒᛧᛧ", "ᛩᛟᛉᚴᛒᛒᛒ", "ᛩᛟᛉᚴᛒᛒᛒ"), # String
         # List initialisation
         ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ", [5,2,7,4], "ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᚻ"),
-        ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ⋅ᛝ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ", 9, "ᛁᛄᛄᛁ") # List indexing
+        ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ⋅ᛝ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ", 9, "ᛁᛄᛄᛁ"), # List indexing
+        ("ᛉᛟᛒ⋅ᚿ⋅ᛧᛧᛁᛄᛁ.ᛄᛁᛧᛧ⋅ᛆ", 5.25, "ᛁᛄᛁ.ᛄᛁ") # String to int/float function
     ]
 )
 def test_pipeline_valid_single_command(

@@ -4,11 +4,33 @@ import sys
 from output_formatter import OutputFormatter
 import token_map
 from errors import RunePlusPlusError
+import number_converter
+from lexer import Lexer
 
 def ᚹᛏᛁᛉᛚ(to_print):
     """The print function"""
     formatted = OutputFormatter(to_print).format()
     print(formatted)
+
+def ᛉᛟᛒ(runes_str):
+    """Converts a string to an int/float (whichever one applies)"""
+    # Validate string
+    digit_chars = number_converter.DIGIT_MAP["0"] + number_converter.DIGIT_MAP["1"]
+    decimal_point = set(runes_str) - set(digit_chars)
+    decimal_point = "".join(decimal_point) # Convert set to string
+
+    if (
+        not(decimal_point == "." or decimal_point == "")
+        or runes_str.count(Lexer.DECIMAL_POINT) > 1
+    ):
+        raise RunePlusPlusError(
+            "String contains characters which can't be converted to an int/float!"
+        )
+
+    # Convert string
+    number = number_converter.from_runes_to_base10(runes_str)
+
+    return number
 
 def ᛁᛉᚹ(input_prompt=""):
     """The input (string) function"""

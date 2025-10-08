@@ -22,7 +22,9 @@ print(lexer.tokens)
 #lexer = Lexer("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ") # List create test
 #lexer = Lexer("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ⋅ᛝ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ") # List indexing test
 #lexer = Lexer("ᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛆ") # native function / print test
-lexer = Lexer("ᛁᛉᚹ⋅ᚿ⋅ᛧᛧᛁᛉᚹᛟᛚᛧᛧ⋅ᛆ") # Input function test
+#lexer = Lexer("ᛁᛉᚹ⋅ᚿ⋅ᛧᛧᛁᛉᚹᛟᛚᛧᛧ⋅ᛆ") # Input function test
+#lexer = Lexer("ᛉᛟᛒ⋅ᚿ⋅ᛧᛧᛁᛄᛁ.ᛄᛁᛧᛧ⋅ᛆ") # Num function test (string to int/float)
+lexer = Lexer("ᛉᛟᛒ⋅ᚿ⋅ᛁᛉᚹ⋅ᚿ⋅ᛆ⋅ᛆ") # Get string input from user and then convert to number
 
 lexer.lex()
 print(lexer.tokens)
