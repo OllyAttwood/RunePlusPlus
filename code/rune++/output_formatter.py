@@ -10,7 +10,7 @@ class OutputFormatter:
     """
 
     FORMATTING_MAP = {
-        "-": "ᛒ⋅",
+        "-": token_map.REVERSE_TOKEN_TYPE_DICT[TT.MINUS] + Lexer.SEPARATOR,
         False: "ᚷ",
         True: "ᚸ",
         None: "ᛉᛟᛉ"
