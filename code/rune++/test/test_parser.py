@@ -43,7 +43,7 @@ def test_parse_line(runes_line, expected_ast_str_repr):
     lexer = Lexer(runes_line)
     lexer.lex()
 
-    parser = Parser(lexer.tokens[0])
+    parser = Parser(lexer.tokens)
     ast = parser.parse_line()
 
     assert ast.__repr__() == expected_ast_str_repr

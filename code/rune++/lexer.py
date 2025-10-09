@@ -21,19 +21,14 @@ class Lexer:
     def lex(self):
         """Splits the text into tokens for parsing"""
         self.tokens = []
-        lines = self.text.split("\n")
 
-        for line in lines:
-            token_line = []
-            # Tokens before more advanced processing
-            pre_tokenised_line = line.split("⋅")
+        # Tokens before more advanced processing
+        pre_tokens = self.text.split("⋅")
 
-            # Determine full tokens
-            for pre_token in pre_tokenised_line:
-                token = self.get_token(pre_token)
-                token_line.append(token)
-
-            self.tokens.append(token_line)
+        # Determine full tokens
+        for pre_token in pre_tokens:
+            token = self.get_token(pre_token)
+            self.tokens.append(token)
 
     def get_token(self, text):
         """Computes the token from the provided text"""

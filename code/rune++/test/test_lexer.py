@@ -107,7 +107,7 @@ def test_lex(input_text, expected_tokens):
     lexer.lex()
 
     for output_token, (expected_token_type, expected_token_value) in zip(
-        lexer.tokens[0], expected_tokens
+        lexer.tokens, expected_tokens
     ):
         assert output_token.token_type == expected_token_type
         assert output_token.value == expected_token_value

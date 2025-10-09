@@ -30,7 +30,7 @@ lexer.lex()
 print(lexer.tokens)
 print("-------------------------------------------------")
 
-parser = Parser(lexer.tokens[0])
+parser = Parser(lexer.tokens)
 ast = parser.parse_line()
 print(ast)
 print("-------------------------------------------------")

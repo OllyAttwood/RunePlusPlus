@@ -25,7 +25,7 @@ def run_command(str, context=None, return_context=False):
     lexer = Lexer(str)
     lexer.lex()
 
-    parser = Parser(lexer.tokens[0])
+    parser = Parser(lexer.tokens)
     ast = parser.parse_line()
 
     evaluator = Evaluator(ast)
