@@ -31,7 +31,8 @@ def create_token_type_dict():
         "ᛧᛧ": TT.STRING,
         "ᚺ": TT.LEFT_SQUARE_BRACKET,
         "ᚻ": TT.RIGHT_SQUARE_BRACKET,
-        "ᛝ": TT.LIST_INDEXER
+        "ᛝ": TT.LIST_INDEXER,
+        "\n": TT.NEW_LINE
     }
 
 def create_reverse_token_type_dict(original_dict):

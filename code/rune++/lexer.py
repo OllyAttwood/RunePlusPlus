@@ -23,7 +23,7 @@ class Lexer:
         self.tokens = []
 
         # Tokens before more advanced processing
-        pre_tokens = self.text.split("⋅")
+        pre_tokens = self.pretokenise_str(self.text)
 
         # Determine full tokens
         for pre_token in pre_tokens:
@@ -71,3 +71,30 @@ class Lexer:
                 return TT.FLOAT
 
         return None
+
+    def pretokenise_str(self, text, separator_char=SEPARATOR):
+        """
+        Splits the input text into 'pre-tokens' (before the more advanced tokenisation
+        takes place) - a list of the text which has been split whenever there is a
+        separator character. New line characters should also be their own element in the
+        list.
+        """
+        cur_pretoken_text = ""
+        pre_tokens = []
+        new_line_char = "\n"
+
+        for char in text:
+            if char == separator_char or char == new_line_char:
+                pre_tokens.append(cur_pretoken_text)
+                cur_pretoken_text = ""
+
+                if char == new_line_char:
+                    pre_tokens.append(char)
+            else:
+                cur_pretoken_text += char
+
+        # Add the remaining pre-token
+        if cur_pretoken_text != "":
+            pre_tokens.append(cur_pretoken_text)
+
+        return pre_tokens

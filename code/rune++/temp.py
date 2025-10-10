@@ -24,7 +24,8 @@ print(lexer.tokens)
 #lexer = Lexer("ᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛆ") # native function / print test
 #lexer = Lexer("ᛁᛉᚹ⋅ᚿ⋅ᛧᛧᛁᛉᚹᛟᛚᛧᛧ⋅ᛆ") # Input function test
 #lexer = Lexer("ᛉᛟᛒ⋅ᚿ⋅ᛧᛧᛁᛄᛁ.ᛄᛁᛧᛧ⋅ᛆ") # Num function test (string to int/float)
-lexer = Lexer("ᛉᛟᛒ⋅ᚿ⋅ᛁᛉᚹ⋅ᚿ⋅ᛆ⋅ᛆ") # Get string input from user and then convert to number
+#lexer = Lexer("ᛉᛟᛒ⋅ᚿ⋅ᛁᛉᚹ⋅ᚿ⋅ᛆ⋅ᛆ") # Get string input from user and then convert to number
+lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ\nᛝᛠᚹᛝ⋅ᚲ⋅ᛁᛁᛄ\nᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᚢ⋅ᛝᛠᚹᛝ⋅ᛆ") # New line lexer test
 
 lexer.lex()
 print(lexer.tokens)

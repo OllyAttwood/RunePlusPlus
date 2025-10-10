@@ -49,6 +49,7 @@ class TokenTypes:
     # Other
     COMMA = "COMMA"
     LIST_INDEXER = "LIST_INDEXER"
+    NEW_LINE = "NEW_LINE"
 
     # Groups of token types
     NUMBER_TYPES = (INT, FLOAT)
