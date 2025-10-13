@@ -111,3 +111,20 @@ def test_lex(input_text, expected_tokens):
     ):
         assert output_token.token_type == expected_token_type
         assert output_token.value == expected_token_value
+
+@pytest.mark.parametrize(
+    "input_text, expected_pre_tokens",
+    [
+        (
+            "ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ\nᛝᛠᚹᛝ⋅ᚲ⋅ᛁᛁᛄ",
+            ["ᛣᛠᛝᚹ", "ᚲ", "ᛁᛄ.ᛁᛄ", "ᛚ", "ᛁᛄ", "\n", "ᛝᛠᚹᛝ", "ᚲ", "ᛁᛁᛄ"]
+        ),
+        ("ᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᚢ⋅ᛝᛠᚹᛝ⋅ᛆ", ["ᚹᛏᛁᛉᛚ", "ᚿ", "ᛣᛠᛝᚹ", "ᚢ", "ᛝᛠᚹᛝ", "ᛆ"])
+    ]
+)
+def test_pretokenise_str(input_text, expected_pre_tokens):
+    """Tests the pretokenise_str() function"""
+    lexer = Lexer(input_text)
+    pre_tokens = lexer.pretokenise_str(input_text)
+
+    assert pre_tokens == expected_pre_tokens
