@@ -26,7 +26,7 @@ def run_command(str, context=None, return_context=False):
     lexer.lex()
 
     parser = Parser(lexer.tokens)
-    ast = parser.parse_line()
+    ast = parser.parse_all()
 
     evaluator = Evaluator(ast)
 
@@ -57,9 +57,9 @@ def run_command(str, context=None, return_context=False):
         ("ᚷ⋅ᛢ⋅ᚸ", False, "ᚷ"),
         ("ᚷ⋅ᛖᛏ⋅ᚸ", True, "ᚸ"), # Or boolean
         ("ᚷ⋅ᛖᛏ⋅ᚷ", False, "ᚷ"),
-        ("ᛁᛩ⋅ᚸ⋅⋮⋅ᛁ⋅ᚺᛅᛁᛩ⋅ᚷ⋅⋮⋅ᛁᛄ⋅ᚺᛅᛣ⋅ᛁᛁ", 1, "ᛁ"), # If statement
-        ("ᛁᛩ⋅ᚷ⋅⋮⋅ᛁ⋅ᚺᛅᛁᛩ⋅ᚸ⋅⋮⋅ᛁᛄ⋅ᚺᛅᛣ⋅ᛁᛁ", 2, "ᛁᛄ"),
-        ("ᛁᛩ⋅ᚷ⋅⋮⋅ᛁ⋅ᚺᛅᛁᛩ⋅ᚷ⋅⋮⋅ᛁᛄ⋅ᚺᛅᛣ⋅ᛁᛁ", 3, "ᛁᛁ"),
+        ("ᛁᛩ⋅ᚸ\nᛁ\nᚺᛅᛁᛩ⋅ᚷ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 1, "ᛁ"), # If statement
+        ("ᛁᛩ⋅ᚷ\nᛁ\nᚺᛅᛁᛩ⋅ᚸ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 2, "ᛁᛄ"),
+        ("ᛁᛩ⋅ᚷ\nᛁ\nᚺᛅᛁᛩ⋅ᚷ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 3, "ᛁᛁ"),
         ("ᛧᛧᛩᛟᛉᚴᛧᛧ⋅ᚢ⋅ᛧᛧᛒᛒᛒᛧᛧ", "ᛩᛟᛉᚴᛒᛒᛒ", "ᛩᛟᛉᚴᛒᛒᛒ"), # String
         # List initialisation
         ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ", [5,2,7,4], "ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᚻ"),
@@ -87,9 +87,9 @@ def test_pipeline_valid_single_command(
     "command_str_list, expected_raw_result, expected_formatted_result",
     [
         (["ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ", "ᛣᛠᛝᚹ"], 5.0, "ᛁᛄᛁ.ᛄ"), # Variable assignment and access
-        (["ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄ⋅⋮⋅ᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ", "ᚷ"], 16, "ᛁᛄᛄᛄᛄ"), # While loop
+        (["ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄ\nᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ", "ᚷ"], 16, "ᛁᛄᛄᛄᛄ"), # While loop
         (
-            ["ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ⋅⋮⋅ᛟ⋅ᛚ⋅ᛟᛟ⋅ᛚ⋅ᛟᛟᛟ", "ᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ"],
+            ["ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛟ⋅ᛚ⋅ᛟᛟ⋅ᛚ⋅ᛟᛟᛟ", "ᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ"],
             24,
             "ᛁᛁᛄᛄᛄ"
         )                                             # Function declaration and call

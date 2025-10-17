@@ -85,7 +85,10 @@ class Lexer:
 
         for char in text:
             if char == separator_char or char == new_line_char:
-                pre_tokens.append(cur_pretoken_text)
+                # Don't add an empty string (consecutive new lines will result in this)
+                if cur_pretoken_text != "":
+                    pre_tokens.append(cur_pretoken_text)
+
                 cur_pretoken_text = ""
 
                 if char == new_line_char:

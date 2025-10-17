@@ -124,3 +124,17 @@ class ListNode:
 
     def __repr__(self):
         return f"<ListNode: {self.element_nodes}>"
+
+class MultiLineNode:
+    """
+    A node which represents one or more different nodes to be executed sequentially. For
+    example a program with several lines would be stored in one of these.
+    """
+
+    def __init__(self, node_list):
+        self.node_list = node_list
+
+    def __repr__(self):
+        return (
+            f"<MultiLineNode: {self.node_list}>"
+        )

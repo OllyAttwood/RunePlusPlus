@@ -48,6 +48,49 @@ class Parser:
 
         return expression
 
+    def parse_all(self):
+        """Attempts to parse all lines"""
+        multi_line_node = self.parse_multi_lines()
+
+        # self.cur_token should be None, otherwise it means something hasn't been parsed
+        if self.cur_token != None:
+            raise RunePlusPlusError(
+                f"End of line not reached! Current token is {self.cur_token}"
+            )
+
+        return multi_line_node
+
+    def parse_multi_lines(self, stop_at_blank_line=False):
+        """
+        Attempts to parse one or more expressions. If stop_at_blank_line is true, the
+        parsing will stop when a blank line (two or more consecutive new lines) is
+        encountered, otherwise blank lines will be ignored.
+        """
+        expressions = []
+        # Parse first expression
+        expressions.append(self.parse_expression())
+
+        # Parse optional extra expressions (each on a new line)
+        while self.cur_token != None and self.cur_token.token_type == TT.NEW_LINE:
+            self.next_token()
+
+            if (
+                stop_at_blank_line
+                and self.cur_token != None and self.cur_token.token_type == TT.NEW_LINE
+            ):
+                break
+
+            # If in the middle of an if/elif/else statement, stop at next case
+            if (
+                self.cur_token != None
+                and self.cur_token.token_type in (TT.ELIF, TT.ELSE)
+            ):
+                break
+
+            expressions.append(self.parse_expression())
+
+        return MultiLineNode(expressions)
+
     def parse_expression(self):
         """
         Attempts to parse the current token(s) as a boolean expression (AND or OR
@@ -218,8 +261,11 @@ class Parser:
             if_cases.append(elif_case)
 
         # Else case
-        if self.cur_token is not None and self.cur_token.token_type == TT.ELSE:
-            else_case = self.parse_single_else_case()
+        if self.cur_token is not None and self.cur_token.token_type != TT.NEW_LINE:
+            if self.cur_token.token_type == TT.ELSE:
+                else_case = self.parse_single_else_case()
+            else:
+                raise RunePlusPlusError("Else case or blank line expected!")
 
         return IfStatementNode(if_cases, else_case)
 
@@ -231,11 +277,11 @@ class Parser:
         self.next_token() # Skips IF/ELIF token
         if_condition = self.parse_expression()
 
-        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
-            raise RunePlusPlusError(f"Expected '⋮', instead found {self.cur_token}")
+        if self.cur_token.token_type != TT.NEW_LINE:
+            raise RunePlusPlusError(f"Expected new line, instead found {self.cur_token}")
 
         self.next_token()
-        if_body = self.parse_expression()
+        if_body = self.parse_multi_lines(stop_at_blank_line=True)
 
         return (if_condition, if_body)
 
@@ -244,7 +290,12 @@ class Parser:
         Attempts to parse a single else case and return the body
         """
         self.next_token() # Skips ELSE token
-        else_body = self.parse_expression()
+
+        if self.cur_token.token_type != TT.NEW_LINE:
+            raise RunePlusPlusError(f"Expected new line, instead found {self.cur_token}")
+
+        self.next_token()
+        else_body = self.parse_multi_lines(stop_at_blank_line=True)
 
         return else_body
 
@@ -253,11 +304,11 @@ class Parser:
         self.next_token() # Skips WHILE token
         while_condition = self.parse_expression()
 
-        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
-            raise RunePlusPlusError(f"Expected '⋮', instead found {self.cur_token}")
+        if self.cur_token.token_type != TT.NEW_LINE:
+            raise RunePlusPlusError(f"Expected new line, instead found {self.cur_token}")
 
         self.next_token()
-        while_body = self.parse_expression()
+        while_body = self.parse_multi_lines(stop_at_blank_line=True)
 
         return WhileNode(while_condition, while_body)
 
@@ -281,7 +332,7 @@ class Parser:
             self.next_token()
 
             # Check for extra function parameters
-            while self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
+            while self.cur_token.token_type != TT.NEW_LINE:
                 if self.cur_token.token_type != TT.COMMA:
                     raise RunePlusPlusError(
                         "Comma expected to separate function parameters!"
@@ -295,11 +346,11 @@ class Parser:
                 parameter_name_tokens.append(self.cur_token)
                 self.next_token()
 
-        if self.cur_token.token_type != TT.CONTROL_FLOW_TERMINATOR:
-            raise RunePlusPlusError("Control flow terminator (⋮) expected!")
+        if self.cur_token.token_type != TT.NEW_LINE:
+            raise RunePlusPlusError(f"Expected new line, instead found {self.cur_token}")
 
-        self.next_token() # Skip CONTROL_FLOW_TERMINATOR token
-        body_node = self.parse_expression()
+        self.next_token() # Skip NEW_LINE token
+        body_node = self.parse_multi_lines(stop_at_blank_line=True)
 
         return FunctionDefinitionNode(
             function_variable_name_token,

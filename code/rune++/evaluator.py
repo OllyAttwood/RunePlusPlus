@@ -46,7 +46,8 @@ class Evaluator:
             FunctionDefinitionNode: self.process_function_definition_node,
             FunctionCallNode: self.process_function_call_node,
             StringNode: self.process_string_node,
-            ListNode: self.process_list_node
+            ListNode: self.process_list_node,
+            MultiLineNode: self.process_multi_line_node
         }
 
     def traverse(self, context, node=None):
@@ -166,13 +167,17 @@ class Evaluator:
             return built_in_function(*parameter_values)
         # If function is not built-in
         else:
-            function_definition_node = context.symbol_table.get(function_variable_name_str)
+            function_definition_node = context.symbol_table.get(
+                function_variable_name_str
+            )
 
             if len(node.parameter_nodes) != len(function_definition_node.parameter_tokens):
                 raise RunePlusPlusError("Incorrect number of parameters provided!")
 
                 # Resolve all parameter values and add them to the function's symbol table
-            for parameter_node, parameter_token in zip(node.parameter_nodes, function_definition_node.parameter_tokens):
+            for parameter_node, parameter_token in zip(
+                node.parameter_nodes, function_definition_node.parameter_tokens
+            ):
                 parameter_name = parameter_token.value
                 new_parameter_value = self.traverse(context, parameter_node)
                 function_context.symbol_table.set(parameter_name, new_parameter_value)
@@ -193,3 +198,13 @@ class Evaluator:
             traversed_list.append(self.traverse(context, element_node))
 
         return traversed_list
+
+    def process_multi_line_node(self, context, node):
+        """sequentially executes each line within the node"""
+
+        return_value = None
+
+        for line_node in node.node_list:
+            return_value = self.traverse(context, line_node)
+
+        return return_value
