@@ -64,7 +64,11 @@ def run_command(str, context=None, return_context=False):
         # List initialisation
         ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ", [5,2,7,4], "ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᚻ"),
         ("ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ⋅ᚻ⋅ᛝ⋅ᛁᛄ⋅ᚢ⋅ᛁᛄ", 9, "ᛁᛄᛄᛁ"), # List indexing
-        ("ᛉᛟᛒ⋅ᚿ⋅ᛧᛧᛁᛄᛁ.ᛄᛁᛧᛧ⋅ᛆ", 5.25, "ᛁᛄᛁ.ᛄᛁ") # String to int/float function
+        ("ᛉᛟᛒ⋅ᚿ⋅ᛧᛧᛁᛄᛁ.ᛄᛁᛧᛧ⋅ᛆ", 5.25, "ᛁᛄᛁ.ᛄᛁ"), # String to int/float function
+        ("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ\nᛣᛠᛝᚹ", 5.0, "ᛁᛄᛁ.ᛄ"), # Variable assignment and access
+        ("ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄ\nᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ\n\nᚷ", 16, "ᛁᛄᛄᛄᛄ"), # While loop
+        # Function declaration and call
+        ("ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛟ⋅ᛚ⋅ᛟᛟ⋅ᛚ⋅ᛟᛟᛟ\n\nᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ", 24, "ᛁᛁᛄᛄᛄ")
     ]
 )
 def test_pipeline_valid_single_command(
@@ -82,43 +86,6 @@ def test_pipeline_valid_single_command(
     assert type(raw_result) == type(expected_raw_result)
     assert formatted_result == expected_formatted_result
     assert type(formatted_result) == type(expected_formatted_result)
-
-@pytest.mark.parametrize(
-    "command_str_list, expected_raw_result, expected_formatted_result",
-    [
-        (["ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ", "ᛣᛠᛝᚹ"], 5.0, "ᛁᛄᛁ.ᛄ"), # Variable assignment and access
-        (["ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄ\nᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ", "ᚷ"], 16, "ᛁᛄᛄᛄᛄ"), # While loop
-        (
-            ["ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛟ⋅ᛚ⋅ᛟᛟ⋅ᛚ⋅ᛟᛟᛟ", "ᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ"],
-            24,
-            "ᛁᛁᛄᛄᛄ"
-        )                                             # Function declaration and call
-    ]
-)
-def test_pipeline_valid_multi_commands(
-    command_str_list,
-    expected_raw_result,
-    expected_formatted_result
-):
-    """
-    Tests the entire programming language pipeline with multiple commands, executed
-    sequentially. Needed for testing the symbol table has been updated.
-    """
-    raw_output, formatted_output, context = run_command(
-        command_str_list[0],
-        return_context=True
-    )
-
-    for command_str in command_str_list[1:]:
-        raw_output, formatted_output = run_command(
-            command_str,
-            context=context
-        )
-
-    assert raw_output == expected_raw_result
-    assert type(raw_output) == type(expected_raw_result)
-    assert formatted_output == expected_formatted_result
-    assert type(formatted_output) == type(expected_formatted_result)
 
 def test_print_function(capsys):
     """
