@@ -36,18 +36,6 @@ class Parser:
         else:
             return self.tokens[self.cur_index + 1]
 
-    def parse_line(self):
-        """Calls parse_expression() but checks that the whole line has been parsed"""
-        expression = self.parse_expression()
-
-        # self.cur_token should be None, otherwise it means something hasn't been parsed
-        if self.cur_token != None:
-            raise RunePlusPlusError(
-                f"End of line not reached! Current token is {self.cur_token}"
-            )
-
-        return expression
-
     def parse_all(self):
         """Attempts to parse all lines"""
         multi_line_node = self.parse_multi_lines()

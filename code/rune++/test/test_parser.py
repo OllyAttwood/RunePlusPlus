@@ -19,31 +19,39 @@ from parser import Parser
         (
             "ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ",
             (
-                "<BinaryOperationNode: <NumberNode: <FLOAT: 2.5>>, <MULTIPLY>, "
-                "<BinaryOperationNode: <BinaryOperationNode: <NumberNode: <INT: 5>>, "
-                "<MULTIPLY>, <NumberNode: <INT: 5>>>, <ADD>, <UnaryOperationNode: "
-                "<MINUS>, <NumberNode: <INT: 5>>>>>"
+                "<MultiLineNode: [<BinaryOperationNode: <NumberNode: <FLOAT: 2.5>>, "
+                "<MULTIPLY>, <BinaryOperationNode: <BinaryOperationNode: <NumberNode: "
+                "<INT: 5>>, <MULTIPLY>, <NumberNode: <INT: 5>>>, <ADD>, "
+                "<UnaryOperationNode: <MINUS>, <NumberNode: <INT: 5>>>>>]>"
             )
         ),
         (
             "ᛁᛁᛁᛄ⋅ᛒ⋅ᛁ.ᛄᛁ⋅ᚫ⋅ᛁᛄ",
             (
-                "<BinaryOperationNode: <NumberNode: <INT: 14>>, <MINUS>, "
-                "<BinaryOperationNode: <NumberNode: <FLOAT: 1.25>>, <DIVIDE>, "
-                "<NumberNode: <INT: 2>>>>"
+                "<MultiLineNode: [<BinaryOperationNode: <NumberNode: <INT: 14>>, "
+                "<MINUS>, <BinaryOperationNode: <NumberNode: <FLOAT: 1.25>>, <DIVIDE>, "
+                "<NumberNode: <INT: 2>>>>]>"
+            )
+        ),
+        (
+            "ᛣᛝᛠᛠ⋅ᚲ⋅ᛁᛄᛁᛄᛁᛄ\nᛣᛝᛠᛠ⋅ᚢ⋅ᛁᛄ",
+            (
+                "<MultiLineNode: [<VariableAssignmentNode: <VARIABLE_NAME: ᛣᛝᛠᛠ>, "
+                "<NumberNode: <INT: 42>>>, <BinaryOperationNode: <VariableReadNode: "
+                "<VARIABLE_NAME: ᛣᛝᛠᛠ>>, <ADD>, <NumberNode: <INT: 2>>>]>"
             )
         )
     ]
 )
-def test_parse_line(runes_line, expected_ast_str_repr):
+def test_parse_all(runes_line, expected_ast_str_repr):
     """
-    Tests the parse_line() function by comparing the resulting abstract syntax tree's
+    Tests the parse_all() function by comparing the resulting abstract syntax tree's
     string representation with the expected output
     """
     lexer = Lexer(runes_line)
     lexer.lex()
 
     parser = Parser(lexer.tokens)
-    ast = parser.parse_line()
+    ast = parser.parse_all()
 
     assert ast.__repr__() == expected_ast_str_repr
