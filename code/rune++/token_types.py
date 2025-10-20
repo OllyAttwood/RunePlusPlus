@@ -40,7 +40,6 @@ class TokenTypes:
     IF = "IF"
     ELIF = "ELIF"
     ELSE = "ELSE"
-    CONTROL_FLOW_TERMINATOR = "CONTROL_FLOW_TERMINATOR"
     WHILE = "WHILE"
 
     # Functions
