@@ -49,7 +49,8 @@ def run_command(str, context=None, return_context=False):
 @pytest.mark.parametrize(
     "command_str, expected_raw_result, expected_formatted_result",
     [
-        ("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ", -50.0, "ᛒ⋅ᛁᛁᛄᛄᛁᛄ.ᛄ"), # Arithmetic ops
+        ("ᛒ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᚿ⋅ᛁᛄᛁ⋅ᛚ⋅ᛁᛄᛁ⋅ᚢ⋅ᛒ⋅ᛁᛄᛁ⋅ᛆ", -50.0, "ᛒ⋅ᛁᛁᛄᛄᛁᛄ.ᛄ"), # Arithmetic ops (*, +)
+        ("ᚿ⋅ᛁᛁᛄᛁ⋅ᛒ⋅ᛁᛁ⋅ᛆ⋅ᚫ⋅ᛁᛄ", 5.0, "ᛁᛄᛁ.ᛄ"), # Arithmetic ops (/, -) (python div results in float)
         ("ᛁᛄᛁ⋅ᛖ⋅ᛁᛁ⋅ᚢ⋅ᛁᛄ", True, "ᚸ"), # Equals comparison
         ("ᛁᛄᛁ⋅ᛒᛖᛏ⋅ᛁᛁ⋅ᚢ⋅ᛁᛄ", False, "ᚷ"), # More than comparison
         ("ᛁᛄᛁ⋅ᛅᚺᛣ⋅ᛁᛁᛁ⋅ᚢ⋅ᛁᛄ", True, "ᚸ"), # Less than comparison
@@ -57,6 +58,8 @@ def run_command(str, context=None, return_context=False):
         ("ᚷ⋅ᛢ⋅ᚸ", False, "ᚷ"),
         ("ᚷ⋅ᛖᛏ⋅ᚸ", True, "ᚸ"), # Or boolean
         ("ᚷ⋅ᛖᛏ⋅ᚷ", False, "ᚷ"),
+        ("ᛉᛖᛚ⋅ᚿ⋅ᚷ⋅ᛆ", True, "ᚸ"), # Not
+        ("ᛉᛖᛚ⋅ᚿ⋅ᚸ⋅ᛆ", False, "ᚷ"),
         ("ᛁᛩ⋅ᚸ\nᛁ\nᚺᛅᛁᛩ⋅ᚷ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 1, "ᛁ"), # If statement
         ("ᛁᛩ⋅ᚷ\nᛁ\nᚺᛅᛁᛩ⋅ᚸ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 2, "ᛁᛄ"),
         ("ᛁᛩ⋅ᚷ\nᛁ\nᚺᛅᛁᛩ⋅ᚷ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ", 3, "ᛁᛁ"),
