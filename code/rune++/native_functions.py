@@ -42,6 +42,13 @@ def ᛁᛉᚹ(input_prompt=""):
 
     return input_str
 
+def ᛅᚺᛉ(list_):
+    """Returns the length of a list (the len() function)"""
+    if not isinstance(list_, list):
+        raise RunePlusPlusError("Error calling ᛅᚺᛉ function: list not given")
+
+    return len(list_)
+
 def get_function_from_name(function_name):
     """
     Returns the actual function from the name if it exists in this module, otherwise

@@ -72,7 +72,8 @@ def run_command(str, context=None, return_context=False):
         ("ᛞ⋅ᚷ⋅ᛅᚺᛣ⋅ᛁᛄᛄᛄᛄ\nᚷ⋅ᚲ⋅ᚷ⋅ᚢ⋅ᛁ\n\nᚷ", 16, "ᛁᛄᛄᛄᛄ"), # While loop
         # Function declaration and call
         ("ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛟ⋅ᛚ⋅ᛟᛟ⋅ᛚ⋅ᛟᛟᛟ\n\nᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ", 24, "ᛁᛁᛄᛄᛄ"),
-        ("ᛩᛟᛉᚴ⋅ᛒᛒᛒ\nᛧᛧᛩᛟᛉᚴᛧᛧ⋅ᚢ⋅ᛧᛧᛒᛒᛒᛧᛧ\n\nᛒᛒᛒ⋅ᚿ⋅ᛆ", "ᛩᛟᛉᚴᛒᛒᛒ", "ᛩᛟᛉᚴᛒᛒᛒ") # Function without parameters
+        ("ᛩᛟᛉᚴ⋅ᛒᛒᛒ\nᛧᛧᛩᛟᛉᚴᛧᛧ⋅ᚢ⋅ᛧᛧᛒᛒᛒᛧᛧ\n\nᛒᛒᛒ⋅ᚿ⋅ᛆ", "ᛩᛟᛉᚴᛒᛒᛒ", "ᛩᛟᛉᚴᛒᛒᛒ"), # Function without parameters
+        ("ᛣᛠᛝᚹ⋅ᚲ⋅ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᛧ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᚻ\nᛅᚺᛉ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᛆ", 5, "ᛁᛄᛁ")
     ]
 )
 def test_pipeline_valid_single_command(

@@ -95,3 +95,29 @@ def test_str_to_num_function_invalid(str_input):
     """
     with pytest.raises(RunePlusPlusError):
         native_functions.ᛉᛟᛒ(str_input)
+
+@pytest.mark.parametrize(
+    "input_list, expected_output",
+    [
+        ([1, 2, 4], 3),
+        ([], 0),
+        (["hello", -3, True, None], 4)
+    ]
+)
+def test_len_function_valid(input_list, expected_output):
+    """Tests the len() function with valid inputs"""
+    result = native_functions.ᛅᚺᛉ(input_list)
+
+    assert result == expected_output
+    assert type(result) == type(expected_output)
+
+@pytest.mark.parametrize(
+    "input_list",
+    [
+        ("test")
+    ]
+)
+def test_len_function_invalid(input_list):
+    """Tests the len() function with invalid inputs (error should be raised)"""
+    with pytest.raises(RunePlusPlusError):
+        native_functions.ᛅᚺᛉ(input_list)

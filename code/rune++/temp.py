@@ -28,7 +28,8 @@ print(lexer.tokens)
 #lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ.ᛁᛄ⋅ᛚ⋅ᛁᛄ\nᛝᛠᚹᛝ⋅ᚲ⋅ᛁᛁᛄ\nᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᚢ⋅ᛝᛠᚹᛝ⋅ᛆ") # New line lexer test
 #lexer = Lexer("ᛁᛩ⋅ᚷ\nᛣᛠᛝᚹ⋅ᚲ⋅ᛁᛄ\nᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᚢ⋅ᛁ⋅ᛆ\nᚺᛅᛁᛩ⋅ᚷ\nᛁᛄ\nᚺᛅᛣ\nᛁᛁ") # If statement test with new grammar rules
 #lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᛄ\nᛞ⋅ᛣᛠᛝᚹ⋅ᛅᚺᛣ⋅ᛁᛄᛁ\nᚹᛏᛁᛉᛚ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᛆ\nᛣᛠᛝᚹ⋅ᚲ⋅ᛣᛠᛝᚹ⋅ᚢ⋅ᛁ") # While loop test with new grammar rules
-lexer = Lexer("ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛣᛠᛝᚹ⋅ᚲ⋅ᛟ⋅ᛚ⋅ᛟᛟ\nᛣᛠᛝᚹ⋅ᛚ⋅ᛟᛟᛟ\n\nᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ") # Function declaration test with new grammar rules
+#lexer = Lexer("ᛩᛟᛉᚴ⋅ᛒᛒᛒ⋅ᛟ⋅ᛧ⋅ᛟᛟ⋅ᛧ⋅ᛟᛟᛟ\nᛣᛠᛝᚹ⋅ᚲ⋅ᛟ⋅ᛚ⋅ᛟᛟ\nᛣᛠᛝᚹ⋅ᛚ⋅ᛟᛟᛟ\n\nᛒᛒᛒ⋅ᚿ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁ⋅ᛧ⋅ᛁᛄᛄ⋅ᛆ") # Function declaration test with new grammar rules
+lexer = Lexer("ᛣᛠᛝᚹ⋅ᚲ⋅ᚺ⋅ᛁᛄᛁ⋅ᛧ⋅ᛁᛄ⋅ᛧ⋅ᛁᛁᛁ⋅ᚻ\nᛅᚺᛉ⋅ᚿ⋅ᛣᛠᛝᚹ⋅ᛆ")
 
 lexer.lex()
 print(lexer.tokens)
