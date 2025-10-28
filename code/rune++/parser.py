@@ -244,7 +244,7 @@ class Parser:
         if_cases.append(if_first_case)
 
         # Loops through all elif cases
-        while self.cur_token.token_type == TT.ELIF:
+        while self.cur_token is not None and self.cur_token.token_type == TT.ELIF:
             elif_case = self.parse_single_if_case()
             if_cases.append(elif_case)
 
