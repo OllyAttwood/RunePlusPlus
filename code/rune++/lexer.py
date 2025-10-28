@@ -84,7 +84,12 @@ class Lexer:
         new_line_char = "\n"
 
         for char in text:
-            if char == separator_char or char == new_line_char:
+            # If new pre-token should be added.
+            # Also allows strings to contain otherwise functional characters such as '⋅'
+            if (
+                (char == separator_char or char == new_line_char)
+                and not self.inside_string(cur_pretoken_text)
+            ):
                 # Don't add an empty string (consecutive new lines will result in this)
                 if cur_pretoken_text != "":
                     pre_tokens.append(cur_pretoken_text)
@@ -101,3 +106,17 @@ class Lexer:
             pre_tokens.append(cur_pretoken_text)
 
         return pre_tokens
+
+    def inside_string(self, cur_pretoken_text):
+        # If string so far is just an opening string symbol and nothing else
+        if cur_pretoken_text == self.STRING_SYMBOL:
+            return True
+
+        # If string has been opened but not closed yet
+        if (
+            cur_pretoken_text.startswith(self.STRING_SYMBOL)
+            and not cur_pretoken_text.endswith(self.STRING_SYMBOL)
+        ):
+            return True
+        else:
+            return False
