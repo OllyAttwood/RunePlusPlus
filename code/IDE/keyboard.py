@@ -1,12 +1,12 @@
 from tkinter import *
-#from tkinter.ttk import *
 import math
+import customtkinter as ctk
 
-class KeyboardFrame(Frame):
-    """A tkinter frame which displays the keyboard"""
+class KeyboardFrame(ctk.CTkFrame):
+    """A customtkinter frame which displays the keyboard"""
 
-    def __init__(self, button_text_size=30):
-        super().__init__()
+    def __init__(self, master):
+        super().__init__(master)
 
         key_chars = (
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
@@ -19,5 +19,5 @@ class KeyboardFrame(Frame):
         for i, key_char in enumerate(key_chars):
             row = i // num_cols
             col = i % num_cols
-            key_button = Button(self, text=key_char, font=(None, button_text_size))
+            key_button = ctk.CTkButton(self, text=key_char)
             key_button.grid(row=row, column=col, sticky="ew")
