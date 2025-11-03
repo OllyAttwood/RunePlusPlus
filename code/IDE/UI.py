@@ -36,10 +36,12 @@ class UI(ctk.CTk):
         keyboard_frame = keyboard.KeyboardFrame(self)
         keyboard_frame.grid(row=1, column=0, columnspan=2)
 
-        # Output log
-        output_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
-        output_log.configure(state="disabled")
-        output_log.grid(row=2, column=0, sticky="ew")
+        # Console log
+        console_log_label = ctk.CTkLabel(self, text="Console")
+        console_log_label.grid(row=2, column=0, sticky="w")
+        console_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
+        console_log.configure(state="disabled")
+        console_log.grid(row=3, column=0, sticky="ew")
 
         # Run button
         run_icon = PhotoImage(
@@ -50,6 +52,6 @@ class UI(ctk.CTk):
         )
         run_icon = run_icon.subsample(8, 8)
         run_button = ctk.CTkButton(self, image=run_icon, text="Run")
-        run_button.grid(row=2, column=1)
+        run_button.grid(row=3, column=1)
 
         self.mainloop()
