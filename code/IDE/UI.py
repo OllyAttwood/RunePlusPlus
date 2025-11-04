@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import *
+import tkinter.filedialog
 import menu_bar
 import keyboard
 
@@ -21,27 +22,31 @@ class UI(ctk.CTk):
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("green")
 
+        # Button callbacks
+        self.open_file_callback = None
+
         # Menu bar
-        menu = menu_bar.MenuBar(
+        self.menu = menu_bar.MenuBar(
             bg="grey",
             activebackground="#36454F"
         )
-        self.config(menu=menu)
+        self.menu.register_open_file_callback(self.open_file_command)
+        self.config(menu=self.menu)
 
         # Text box
-        text_box = ctk.CTkTextbox(self, font=(None, text_size))
-        text_box.grid(row=0, column=0, columnspan=2, sticky="nesw")
+        self.text_box = ctk.CTkTextbox(self, font=(None, text_size))
+        self.text_box.grid(row=0, column=0, columnspan=2, sticky="nesw")
 
         # Keyboard
-        keyboard_frame = keyboard.KeyboardFrame(self)
-        keyboard_frame.grid(row=1, column=0, columnspan=2)
+        self.keyboard_frame = keyboard.KeyboardFrame(self)
+        self.keyboard_frame.grid(row=1, column=0, columnspan=2)
 
         # Console log
         console_log_label = ctk.CTkLabel(self, text="Console")
         console_log_label.grid(row=2, column=0, sticky="w")
-        console_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
-        console_log.configure(state="disabled")
-        console_log.grid(row=3, column=0, sticky="ew")
+        self.console_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
+        self.console_log.configure(state="disabled")
+        self.console_log.grid(row=3, column=0, sticky="ew")
 
         # Run button
         run_icon = PhotoImage(
@@ -51,7 +56,19 @@ class UI(ctk.CTk):
             )
         )
         run_icon = run_icon.subsample(8, 8)
-        run_button = ctk.CTkButton(self, image=run_icon, text="Run")
-        run_button.grid(row=3, column=1)
+        self.run_button = ctk.CTkButton(self, image=run_icon, text="Run")
+        self.run_button.grid(row=3, column=1)
 
-        self.mainloop()
+    def open_file_command(self):
+        """
+        Opens the file selection dialog, runs the given callback (to get the file
+        contents), then displays it in the text_box
+        """
+        file_path = tkinter.filedialog.askopenfilename()
+        file_contents = self.open_file_callback(file_path)
+        self.text_box.delete("1.0", "end")
+        self.text_box.insert("1.0", file_contents)
+
+    def register_open_file_callback(self, callback):
+        """Registers the new callback for the open file button in the menu"""
+        self.open_file_callback = callback

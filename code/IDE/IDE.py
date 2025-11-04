@@ -7,3 +7,7 @@ from presenter import Presenter
 view = UI()
 model = IDE_Functions()
 presenter = Presenter(view, model)
+
+# main loop of UI must be started after all callbacks have been registered by the
+# presenter
+view.mainloop()
