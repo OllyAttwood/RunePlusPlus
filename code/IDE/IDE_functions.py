@@ -17,6 +17,8 @@ class IDE_Functions:
 
         self.current_file_name = file_path
 
+        return file_contents
+
     def save_to_file(self, file_path, text_to_save):
         """
         Saves the text to the given file location, also updates current_file_name
