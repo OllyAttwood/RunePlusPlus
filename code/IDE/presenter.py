@@ -8,3 +8,4 @@ class Presenter:
 
         # Setup button callbacks
         self.view.register_open_file_callback(self.model.open_file)
+        self.view.register_save_as_callback(self.model.save_to_file)

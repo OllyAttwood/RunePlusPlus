@@ -24,6 +24,7 @@ class UI(ctk.CTk):
 
         # Button callbacks
         self.open_file_callback = None
+        self.save_as_callback = None
 
         # Menu bar
         self.menu = menu_bar.MenuBar(
@@ -31,6 +32,7 @@ class UI(ctk.CTk):
             activebackground="#36454F"
         )
         self.menu.register_open_file_callback(self.open_file_command)
+        self.menu.register_save_as_callback(self.save_as_command)
         self.config(menu=self.menu)
 
         # Text box
@@ -69,6 +71,19 @@ class UI(ctk.CTk):
         self.text_box.delete("1.0", "end")
         self.text_box.insert("1.0", file_contents)
 
+    def save_as_command(self):
+        """
+        Opens the file selection dialog and runs the given callback (to save the file)
+        """
+        file_path = tkinter.filedialog.asksaveasfilename()
+        file_contents = self.text_box.get("1.0", "end")
+        self.save_as_callback(file_path, file_contents)
+
+
     def register_open_file_callback(self, callback):
         """Registers the new callback for the open file button in the menu"""
         self.open_file_callback = callback
+
+    def register_save_as_callback(self, callback):
+        """Registers the new callback for the save as button in the menu"""
+        self.save_as_callback = callback
