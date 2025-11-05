@@ -14,6 +14,7 @@ class MenuBar(Menu):
         # Button callbacks
         self.open_file_callback = None
         self.save_as_callback = None
+        self.save_callback = None
 
         # File menu
         file_menu = Menu(
@@ -25,7 +26,7 @@ class MenuBar(Menu):
         )
         self.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Open file...", command=self.open_file_command)
-        file_menu.add_command(label="Save", command=None)
+        file_menu.add_command(label="Save", command=self.save_command)
         file_menu.add_command(label="Save as...", command=self.save_as_command)
 
         # Run menu
@@ -51,6 +52,12 @@ class MenuBar(Menu):
         """
         self.save_as_callback()
 
+    def save_command(self):
+        """
+        Runs the provided callback for the save button
+        """
+        self.save_callback()
+
     def register_open_file_callback(self, callback):
         """
         Updates the callback for the open file button
@@ -62,3 +69,9 @@ class MenuBar(Menu):
         Updates the callback for the save as button
         """
         self.save_as_callback = callback
+
+    def register_save_callback(self, callback):
+        """
+        Updates the callback for the save button
+        """
+        self.save_callback = callback

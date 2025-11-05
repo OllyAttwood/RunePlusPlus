@@ -25,6 +25,7 @@ class UI(ctk.CTk):
         # Button callbacks
         self.open_file_callback = None
         self.save_as_callback = None
+        self.save_as_callback = None
 
         # Menu bar
         self.menu = menu_bar.MenuBar(
@@ -33,6 +34,7 @@ class UI(ctk.CTk):
         )
         self.menu.register_open_file_callback(self.open_file_command)
         self.menu.register_save_as_callback(self.save_as_command)
+        self.menu.register_save_callback(self.save_command)
         self.config(menu=self.menu)
 
         # Text box
@@ -79,6 +81,10 @@ class UI(ctk.CTk):
         file_contents = self.text_box.get("1.0", "end")
         self.save_as_callback(file_path, file_contents)
 
+    def save_command(self):
+        """Saves the text to the current file by runnng the callback"""
+        file_contents = self.text_box.get("1.0", "end")
+        self.save_callback(file_contents)
 
     def register_open_file_callback(self, callback):
         """Registers the new callback for the open file button in the menu"""
@@ -87,3 +93,7 @@ class UI(ctk.CTk):
     def register_save_as_callback(self, callback):
         """Registers the new callback for the save as button in the menu"""
         self.save_as_callback = callback
+
+    def register_save_callback(self, callback):
+        """Registers the new callback for the save button in the menu"""
+        self.save_callback = callback
