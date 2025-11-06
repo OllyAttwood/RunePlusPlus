@@ -1,3 +1,13 @@
+import sys
+import os
+
+# Importing module to run code here, which is in a parallel directory, therefore needs
+# to be imported differently (also the directory 'rune++' contains invalid characters
+# for regular importing)
+run_module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'rune++'))
+sys.path.insert(0, run_module_path)
+import run
+
 class IDE_Functions:
     """
     Class which serves as the model component of the MVP pattern. This contains all the
@@ -36,3 +46,11 @@ class IDE_Functions:
             raise ValueError("No current file to save to")
 
         self.save_to_file(self.current_file_name, text_to_save)
+
+    def run_code_from_file_path(self, file_path):
+        """Runs the code saved at the given location"""
+        run.run_from_file_path(file_path)
+
+    def run_code_from_current_file(self):
+        """Runs the code saved in the current file"""
+        self.run_code_from_file_path(self.current_file_name)

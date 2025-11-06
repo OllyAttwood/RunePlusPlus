@@ -10,3 +10,4 @@ class Presenter:
         self.view.register_open_file_callback(self.model.open_file)
         self.view.register_save_as_callback(self.model.save_to_file)
         self.view.register_save_callback(self.model.save_to_current_file)
+        self.view.register_run_callback(self.model.run_code_from_current_file)
