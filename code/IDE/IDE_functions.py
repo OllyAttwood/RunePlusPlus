@@ -47,10 +47,6 @@ class IDE_Functions:
 
         self.save_to_file(self.current_file_name, text_to_save)
 
-    def run_code_from_file_path(self, file_path):
-        """Runs the code saved at the given location"""
-        run.run_from_file_path(file_path)
-
     def run_code_from_current_file(self):
         """Runs the code saved in the current file"""
-        self.run_code_from_file_path(self.current_file_name)
+        run.run_from_file_path(self.current_file_name)

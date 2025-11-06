@@ -25,7 +25,7 @@ class UI(ctk.CTk):
         # Button callbacks
         self.open_file_callback = None
         self.save_as_callback = None
-        self.save_as_callback = None
+        self.save_callback = None
         self.run_callback = None
 
         # Menu bar
@@ -71,30 +71,19 @@ class UI(ctk.CTk):
         self.run_button.grid(row=3, column=1)
 
     def open_file_command(self):
-        """
-        Opens the file selection dialog, runs the given callback (to get the file
-        contents), then displays it in the text_box
-        """
-        file_path = tkinter.filedialog.askopenfilename()
-        file_contents = self.open_file_callback(file_path)
-        self.text_box.delete("1.0", "end")
-        self.text_box.insert("1.0", file_contents)
+        """Runs the callback provided for the open file button click"""
+        self.open_file_callback()
 
     def save_as_command(self):
-        """
-        Opens the file selection dialog and runs the given callback (to save the file)
-        """
-        file_path = tkinter.filedialog.asksaveasfilename()
-        file_contents = self.text_box.get("1.0", "end")
-        self.save_as_callback(file_path, file_contents)
+        """Runs the callback provided for the save as button click"""
+        self.save_as_callback()
 
     def save_command(self):
-        """Saves the text to the current file by runnng the callback"""
-        file_contents = self.text_box.get("1.0", "end")
-        self.save_callback(file_contents)
+        """Runs the callback provided for the save button click"""
+        self.save_callback()
 
     def run_command(self):
-        """Runs the run callback to run the current file"""
+        """Runs the callback provided for the run button click"""
         self.run_callback()
 
     def register_open_file_callback(self, callback):
@@ -115,3 +104,20 @@ class UI(ctk.CTk):
         button
         """
         self.run_callback = callback
+
+    def get_code_window_text(self):
+        """Returns the current text in the code window"""
+        return self.text_box.get("1.0", "end")
+
+    def set_code_window_text(self, new_text):
+        """Sets the code window text"""
+        self.text_box.delete("1.0", "end")
+        self.text_box.insert("1.0", new_text)
+
+    def request_save_path(self):
+        """Produces a pop-up asking the user for a file path to save to"""
+        return tkinter.filedialog.asksaveasfilename()
+
+    def request_open_path(self):
+        """Produces a pop-up asking the user for a file path to open"""
+        return tkinter.filedialog.askopenfilename()

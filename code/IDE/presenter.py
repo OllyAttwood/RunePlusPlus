@@ -5,9 +5,34 @@ class Presenter:
         self.view = view
         self.model = model
 
-
         # Setup button callbacks
-        self.view.register_open_file_callback(self.model.open_file)
-        self.view.register_save_as_callback(self.model.save_to_file)
-        self.view.register_save_callback(self.model.save_to_current_file)
-        self.view.register_run_callback(self.model.run_code_from_current_file)
+        self.view.register_open_file_callback(self.on_open_file_button_click)
+        self.view.register_save_as_callback(self.on_save_as_button_click)
+        self.view.register_save_callback(self.on_save_button_click)
+        self.view.register_run_callback(self.on_run_button_click)
+
+    def on_open_file_button_click(self):
+        """
+        Gets the desired file location, gets its contents, then displays it in the view
+        """
+        file_path = self.view.request_open_path()
+        file_contents = self.model.open_file(file_path)
+        self.view.set_code_window_text(file_contents)
+
+    def on_save_as_button_click(self):
+        """
+        Gets the text from the code window, gets the desired save location, then saves
+        it as the current file
+        """
+        file_contents = self.view.get_code_window_text()
+        file_path = self.view.request_save_path()
+        self.model.save_to_file(file_path, file_contents)
+
+    def on_save_button_click(self):
+        """Gets the text from the code window, then saves it as the current file"""
+        file_contents = self.view.get_code_window_text()
+        self.model.save_to_current_file(file_contents)
+
+    def on_run_button_click(self):
+        """Runs the code in the current file"""
+        self.model.run_code_from_current_file()
