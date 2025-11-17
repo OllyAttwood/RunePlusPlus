@@ -43,7 +43,7 @@ class IDE_Functions:
         Saves the text to the current file location, also updates current_file_name
         """
         if self.current_file_name == "" or self.current_file_name is None:
-            raise ValueError("No current file to save to")
+            raise ValueError("No current file to save to!")
 
         self.save_to_file(self.current_file_name, text_to_save)
 

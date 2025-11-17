@@ -3,6 +3,7 @@ from tkinter import *
 import tkinter.filedialog
 import menu_bar
 import keyboard
+from messagebox import MessageBox
 
 # Ignore CTkButton warning when using a PhotoImage
 import warnings
@@ -121,3 +122,7 @@ class UI(ctk.CTk):
     def request_open_path(self):
         """Produces a pop-up asking the user for a file path to open"""
         return tkinter.filedialog.askopenfilename()
+
+    def display_error_message(self, error_message):
+        """Shows an error message pop-up"""
+        MessageBox("Error", error_message)
