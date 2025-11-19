@@ -52,7 +52,6 @@ class UI(ctk.CTk):
         console_log_label = ctk.CTkLabel(self, text="Console")
         console_log_label.grid(row=2, column=0, sticky="w")
         self.console_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
-        self.console_log.configure(state="disabled")
         self.console_log.grid(row=3, column=0, sticky="ew")
 
         # Run button
@@ -126,3 +125,7 @@ class UI(ctk.CTk):
     def display_error_message(self, error_message):
         """Shows an error message pop-up"""
         MessageBox("Error", error_message)
+
+    def append_to_console(self, text):
+        """Appends given text to the console's text"""
+        self.console_log.insert("end", text)

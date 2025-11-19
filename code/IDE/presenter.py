@@ -1,3 +1,6 @@
+from output_redirect import OutputRedirector
+import sys
+
 class Presenter:
     """The presenter class to co-ordinate the view with the real functionality"""
 
@@ -10,6 +13,10 @@ class Presenter:
         self.view.register_save_as_callback(self.on_save_as_button_click)
         self.view.register_save_callback(self.on_save_button_click)
         self.view.register_run_callback(self.on_run_button_click)
+
+        # Setup out redirect from terminal to IDE console
+        output_redirector = OutputRedirector(self.view.append_to_console)
+        sys.stdout = output_redirector
 
     def on_open_file_button_click(self):
         """
