@@ -14,9 +14,10 @@ class Presenter:
         self.view.register_save_callback(self.on_save_button_click)
         self.view.register_run_callback(self.on_run_button_click)
 
-        # Setup out redirect from terminal to IDE console
+        # Setup output redirect from terminal to IDE console
         output_redirector = OutputRedirector(self.view.append_to_console)
         sys.stdout = output_redirector
+        sys.stderr = output_redirector
 
     def on_open_file_button_click(self):
         """
