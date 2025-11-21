@@ -133,7 +133,14 @@ class UI(ctk.CTk):
         MessageBox("Error", error_message)
 
     def append_to_console(self, text):
-        """Appends given text to the console's text"""
+        """Appends given text to the console's text using the UI thread"""
+        self.after(0, lambda: self._append_to_console_unsafe(text))
+
+    def _append_to_console_unsafe(self, text):
+        """
+        Appends given text to the console's text - unsafe because this method assumes
+        that it is being called on the UI thread
+        """
         self.console_log.insert("end", text)
 
     def _submit_input(self, event):
