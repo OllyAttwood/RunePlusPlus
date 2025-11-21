@@ -142,6 +142,7 @@ class UI(ctk.CTk):
         that it is being called on the UI thread
         """
         self.console_log.insert("end", text)
+        self.console_log.see("end")
 
     def _submit_input(self, event):
         """Function to call when enter is pressed in console. Handles user input"""
