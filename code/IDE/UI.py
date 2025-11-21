@@ -4,6 +4,7 @@ import tkinter.filedialog
 import menu_bar
 import keyboard
 from messagebox import MessageBox
+import threading
 
 # Ignore CTkButton warning when using a PhotoImage
 import warnings
@@ -40,6 +41,10 @@ class UI(ctk.CTk):
         self.menu.register_run_callback(self.run_command)
         self.config(menu=self.menu)
 
+        # Input() function thread handling, to replace the builtin function
+        self.input_event = threading.Event()
+        self.input_value = None
+
         # Text box
         self.text_box = ctk.CTkTextbox(self, font=(None, text_size))
         self.text_box.grid(row=0, column=0, columnspan=2, sticky="nesw")
@@ -53,6 +58,7 @@ class UI(ctk.CTk):
         console_log_label.grid(row=2, column=0, sticky="w")
         self.console_log = ctk.CTkTextbox(self, height=200, font=(None, text_size))
         self.console_log.grid(row=3, column=0, sticky="ew")
+        self.console_log.bind("<Return>", self._submit_input)
 
         # Run button
         run_icon = PhotoImage(
@@ -129,3 +135,19 @@ class UI(ctk.CTk):
     def append_to_console(self, text):
         """Appends given text to the console's text"""
         self.console_log.insert("end", text)
+
+    def _submit_input(self, event):
+        """Function to call when enter is pressed in console. Handles user input"""
+        self.input_value = self.console_log.get("end-1c linestart", "end-1c lineend") # Last line of console
+        self.input_event.set() # Sets the flag to true (thread shouldn't wait any longer)
+
+    def get_input(self, prompt):
+        """
+        Function to replace the built-in input() function (so that IDE handles input
+        rather than terminal)
+        """
+        self.input_event.clear() # Resets flag to false
+        self.append_to_console(f"{prompt}\n")
+        self.input_event.wait() # Thread waits in background, until flag is changed
+
+        return self.input_value

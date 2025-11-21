@@ -1,5 +1,7 @@
 from output_redirect import OutputRedirector
 import sys
+import builtins
+from threading import Thread
 
 class Presenter:
     """The presenter class to co-ordinate the view with the real functionality"""
@@ -18,6 +20,9 @@ class Presenter:
         output_redirector = OutputRedirector(self.view.append_to_console)
         sys.stdout = output_redirector
         sys.stderr = output_redirector
+
+        # Setup input redirect from terminal to IDE console
+        builtins.input = self.gui_input
 
     def on_open_file_button_click(self):
         """
@@ -50,8 +55,14 @@ class Presenter:
     def on_run_button_click(self):
         """Runs the code in the current file"""
         try:
-            self.model.run_code_from_current_file()
+            # Run the user's code in a separate thread to keep UI unblocked
+            user_code_thread = Thread(target=self.model.run_code_from_current_file)
+            user_code_thread.start()
         except FileNotFoundError as err:
             self.view.display_error_message(
                 "No current file to run (file must be saved/opened)!"
             )
+
+    def gui_input(self, prompt):
+        """Wrapper for new input function"""
+        return self.view.get_input(prompt)
