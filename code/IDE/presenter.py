@@ -56,7 +56,10 @@ class Presenter:
         """Runs the code in the current file"""
         try:
             # Run the user's code in a separate thread to keep UI unblocked
-            user_code_thread = Thread(target=self.model.run_code_from_current_file)
+            user_code_thread = Thread(
+                target=self.model.run_code_from_current_file,
+                daemon=True
+            )
             user_code_thread.start()
         except FileNotFoundError as err:
             self.view.display_error_message(
