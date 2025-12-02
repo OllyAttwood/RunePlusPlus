@@ -159,3 +159,7 @@ class UI(ctk.CTk):
         self.input_event.wait() # Thread waits in background, until flag is changed
 
         return self.input_value
+
+    def clear_console(self):
+        """Removes all current text from the console"""
+        self.console_log.delete("1.0", "end")

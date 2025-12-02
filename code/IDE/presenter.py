@@ -54,6 +54,8 @@ class Presenter:
 
     def on_run_button_click(self):
         """Runs the code in the current file"""
+        self.view.clear_console()
+
         try:
             # Run the user's code in a separate thread to keep UI unblocked
             user_code_thread = Thread(
