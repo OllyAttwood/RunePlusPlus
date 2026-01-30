@@ -1,0 +1,13 @@
+OUTPUT
+	- ouput (print/return value) is produced by running user code
+	- sent via pipe to main process (marked as either regular output or return value)
+	- main process (GUI) must be always listening (polling) with a constant loop until user code stops 		  (naturally or is killed)
+	- GUI then updates console log with output
+	
+INPUT
+	- user code calls input() function
+	- input() function has been overridden in sub-process
+	- sub-process's input() function sends pipe message to main process (GUI) to get input (along with 		  prompt text to show user)
+	- sub-process waits (using poll()) until input is piped back by main process
+	- main process gets the user input via the console (as done currently), then sends user's input to 
+	  sub-process via pipe
