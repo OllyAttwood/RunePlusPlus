@@ -5,7 +5,7 @@ import customtkinter as ctk
 class KeyboardFrame(ctk.CTkFrame):
     """A customtkinter frame which displays the keyboard"""
 
-    def __init__(self, master):
+    def __init__(self, master, button_text_size=20):
         super().__init__(master)
         self.key_callback = None
 
@@ -32,6 +32,7 @@ class KeyboardFrame(ctk.CTkFrame):
             key_button = ctk.CTkButton(
                 self,
                 text=key_char,
+                font=(None, button_text_size),
                 command=lambda char=key_char: self.key_callback(char)
             )
             key_button.grid(row=row, column=col, sticky="ew")
