@@ -52,6 +52,7 @@ class UI(ctk.CTk):
         # Keyboard
         self.keyboard_frame = keyboard.KeyboardFrame(self)
         self.keyboard_frame.grid(row=1, column=0, columnspan=2)
+        self.keyboard_frame.register_key_callback(self.key_pressed)
 
         # Console log
         console_log_label = ctk.CTkLabel(self, text="Console")
@@ -163,3 +164,7 @@ class UI(ctk.CTk):
     def clear_console(self):
         """Removes all current text from the console"""
         self.console_log.delete("1.0", "end")
+
+    def key_pressed(self, char):
+        """Function to call when a key is pressed on the keyboard"""
+        self.text_box.insert("insert", char)

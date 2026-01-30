@@ -7,6 +7,7 @@ class KeyboardFrame(ctk.CTkFrame):
 
     def __init__(self, master):
         super().__init__(master)
+        self.key_callback = None
 
         key_chars = (
             # From token_map.py
@@ -28,5 +29,13 @@ class KeyboardFrame(ctk.CTkFrame):
         for i, key_char in enumerate(key_chars):
             row = i // num_cols
             col = i % num_cols
-            key_button = ctk.CTkButton(self, text=key_char)
+            key_button = ctk.CTkButton(
+                self,
+                text=key_char,
+                command=lambda char=key_char: self.key_callback(char)
+            )
             key_button.grid(row=row, column=col, sticky="ew")
+
+    def register_key_callback(self, callback):
+        """Registers the new callback for the key press"""
+        self.key_callback = callback
