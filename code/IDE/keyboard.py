@@ -9,11 +9,20 @@ class KeyboardFrame(ctk.CTkFrame):
         super().__init__(master)
 
         key_chars = (
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
-            "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3",
-            "4", "5", "6", "7", "8", "9"
+            # From token_map.py
+            "ᚢ", "ᛒ", "ᛚ", "ᚫ", "ᚲ", "ᚿ", "ᛆ", "ᛅᚺᛣ", "ᛒᛖᛏ", "ᛖ", "ᛢ", "ᛖᛏ", "ᛉᛖᛚ",
+            "ᛁᛩ", "ᚺᛅᛁᛩ", "ᚺᛅᛣ", "ᛞ", "ᛩᛟᛉᚴ", "ᛧ", "ᛧᛧ", "ᚺ", "ᚻ", "ᛝ",
+            # Boolean
+            "ᚸ", "ᚷ",
+            # Number related
+            "ᛄ", "ᛁ", ".",
+            # Remaining variable name characters
+            "ᚹ", "ᚱ", "ᛩ", "ᛐ", "ᛏ", "ᚳ", "ᛣ", "ᚴ", "ᚠ", "ᛉ", "ᚩ", "ᛠ", "ᛈ", "ᛕ", "ᛅ",
+            "ᚾ", "ᛡ", "ᛋ", "ᛟ",
+            # Separator
+            "⋅"
         )
-        num_rows = 3
+        num_rows = 6
         num_cols = math.ceil(len(key_chars) / num_rows)
 
         for i, key_char in enumerate(key_chars):
