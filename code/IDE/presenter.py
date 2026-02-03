@@ -66,6 +66,7 @@ class Presenter:
             self.view.display_error_message(
                 "No current file to run (file must be saved/opened)!"
             )
+            self.view.set_execution_buttons_state(run_enabled=True)
         except Exception as err:
             self.view.display_error_message(f"Error running code: {err}")
 
