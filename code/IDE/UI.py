@@ -29,6 +29,7 @@ class UI(ctk.CTk):
         self.save_as_callback = None
         self.save_callback = None
         self.run_callback = None
+        self.stop_callback = None
 
         # Menu bar
         self.menu = menu_bar.MenuBar(
@@ -135,6 +136,10 @@ class UI(ctk.CTk):
         """
         self.run_callback = callback
 
+    def register_stop_callback(self, callback):
+        """Registers the new callback for the stop button"""
+        self.stop_callback = callback
+
     def get_code_window_text(self):
         """Returns the current text in the code window"""
         return self.text_box.get("1.0", "end")
@@ -183,6 +188,10 @@ class UI(ctk.CTk):
         self.input_event.wait() # Thread waits in background, until flag is changed
 
         return self.input_value
+
+    def cancel_pending_input(self):
+        """Unblocks any thread waiting on get_input() (e.g. when stop is clicked)"""
+        self.input_event.set()
 
     def clear_console(self):
         """Removes all current text from the console"""

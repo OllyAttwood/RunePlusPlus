@@ -14,6 +14,7 @@ class Presenter:
         self.view.register_save_as_callback(self.on_save_as_button_click)
         self.view.register_save_callback(self.on_save_button_click)
         self.view.register_run_callback(self.on_run_button_click)
+        self.view.register_stop_callback(self.on_stop_button_click)
 
         # Setup output redirect from terminal to IDE console
         output_redirector = OutputRedirector(self.view.append_to_console)
@@ -65,6 +66,11 @@ class Presenter:
             )
         except Exception as err:
             self.view.display_error_message(f"Error running code: {err}")
+
+    def on_stop_button_click(self):
+        """Stops the currently running code execution"""
+        self.model.stop_code_execution()
+        self.view.cancel_pending_input()  # Unblock any thread waiting for input
 
     def gui_input(self, prompt):
         """Wrapper for new input function"""

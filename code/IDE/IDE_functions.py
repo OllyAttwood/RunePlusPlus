@@ -18,6 +18,8 @@ class IDE_Functions:
 
     def __init__(self):
         self.current_file_name = ""
+        self.run_subprocess = None
+        self._stop_requested = False
 
     def open_file(self, file_path):
         """
@@ -60,10 +62,12 @@ class IDE_Functions:
                 "No current file to run (file must be saved/opened)!"
             )
 
+        self._stop_requested = False
+
         # Run the user's code in a separate process to keep UI unblocked
         python_exe = sys.executable
         run_file_path = self._get_run_file_path() # Deals with /../
-        run_subprocess = subprocess.Popen(
+        self.run_subprocess = subprocess.Popen(
             [python_exe, run_file_path, self.current_file_name],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
@@ -75,7 +79,7 @@ class IDE_Functions:
 
         run_subprocess_thread = Thread(
             target=self._read_subprocess_output,
-            args=(run_subprocess, get_input_callback, return_output_callback)
+            args=(self.run_subprocess, get_input_callback, return_output_callback)
         )
         run_subprocess_thread.start()
 
@@ -107,17 +111,36 @@ class IDE_Functions:
         """
         INPUT_REQUEST_TAG = "<INPUT_REQUEST>"
 
-        for line in iter(subproc.stdout.readline, ""): # Stops when "" is provided
-            if line:
-                # If input request
-                if line.startswith(INPUT_REQUEST_TAG):
-                    prompt = line[len(INPUT_REQUEST_TAG):].rstrip("\n\r")
-                    user_input = get_input_callback(prompt)
-                    subproc.stdin.write(user_input + "\n")
-                    subproc.stdin.flush()
-                else: # If regular output
-                    return_output_callback(line)
+        try:
+            for line in iter(subproc.stdout.readline, ""): # Stops when "" is provided
+                if self._stop_requested:
+                    break
+                if line:
+                    # If input request
+                    if line.startswith(INPUT_REQUEST_TAG):
+                        prompt = line[len(INPUT_REQUEST_TAG):].rstrip("\n\r")
+                        user_input = get_input_callback(prompt)
+                        # Check if stop was requested while waiting for input
+                        if self._stop_requested:
+                            break
+                        subproc.stdin.write(user_input + "\n")
+                        subproc.stdin.flush()
+                    else: # If regular output
+                        return_output_callback(line)
+        except (BrokenPipeError, OSError):
+            # Subprocess was terminated - exit gracefully.
+            # This can happen if the stop button is clicked while the subprocess is 
+            # waiting for input - unlikely but possible
+            pass
 
         subproc.stdout.close()
         subproc.stdin.close()
         subproc.wait()
+
+    def stop_code_execution(self):
+        """Stops the currently running user code subprocess"""
+        self._stop_requested = True
+        if self.run_subprocess and self.run_subprocess.poll() is None:
+            self.run_subprocess.terminate()
+            self.run_subprocess.wait() # Clean up subprocess resources
+            self.run_subprocess = None
