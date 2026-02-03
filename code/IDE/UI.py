@@ -228,7 +228,7 @@ class UI(ctk.CTk):
     def create_button_icon(self, icon_file_path):
         """Creates a PhotoImage from the given file path, and resizes it"""
         btn_icon = PhotoImage(file=icon_file_path)
-        btn_icon = btn_icon.subsample(8, 8)
+        btn_icon = btn_icon.subsample(10, 10)
 
         return btn_icon
 
