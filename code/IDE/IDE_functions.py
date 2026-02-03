@@ -89,7 +89,8 @@ class IDE_Functions:
                 get_input_callback,
                 return_output_callback,
                 on_finished_callback
-            )
+            ),
+            daemon=True
         )
         run_subprocess_thread.start()
 
