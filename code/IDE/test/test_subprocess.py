@@ -11,16 +11,12 @@ See https://www.tutorialspoint.com/pytest/index.htm for more help
 
 import pytest
 import os
-from UI import UI
 from IDE_functions import IDE_Functions
-from presenter import Presenter
 
 def test_get_run_file_path():
-    view = UI()
     model = IDE_Functions()
-    presenter = Presenter(view, model)
 
-    path = presenter._get_run_file_path()
+    path = model._get_run_file_path()
 
     # Check that the path is absolute
     assert os.path.isabs(path), "Path should be absolute"
