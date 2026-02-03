@@ -56,9 +56,11 @@ class Presenter:
         """Runs the code in the current file"""
         self.view.clear_console()
         try:
+            self.view.set_execution_buttons_state(run_enabled=False)
             self.model.run_code_from_current_file(
                 self.view.get_input,
-                self.view.append_to_console
+                self.view.append_to_console,
+                self.on_code_execution_finished
             )
         except FileNotFoundError:
             self.view.display_error_message(
@@ -67,10 +69,19 @@ class Presenter:
         except Exception as err:
             self.view.display_error_message(f"Error running code: {err}")
 
+    def on_code_execution_finished(self):
+        """Called when subprocess finishes - updates UI buttons (run/stop)"""
+        # after() ensures that the method is called on the UI thread
+        self.view.after(
+            0,
+            lambda: self.view.set_execution_buttons_state(run_enabled=True)
+        )
+
     def on_stop_button_click(self):
         """Stops the currently running code execution"""
         self.model.stop_code_execution()
         self.view.cancel_pending_input()  # Unblock any thread waiting for input
+        self.view.set_execution_buttons_state(run_enabled=True)
 
     def gui_input(self, prompt):
         """Wrapper for new input function"""

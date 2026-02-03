@@ -23,6 +23,18 @@ class UI(ctk.CTk):
         text_size = 15
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("green")
+        icon_dir_path = (
+            "/home/olly/Documents/programming/other/rune_programming_language/code/"
+            "IDE/"
+        )
+        self.run_icon_path = icon_dir_path + "run_icon.png"
+        self.stop_icon_path = icon_dir_path + "stop_icon.png"
+        self.run_icon_grey_path = icon_dir_path + "run_icon_grey.png"
+        self.stop_icon_grey_path = icon_dir_path + "stop_icon_grey.png"
+        # enabled_btn_colour is initialised after button is created; stored for when 
+        # buttons are re-enabled
+        self.enabled_btn_colour = None
+        self.disabled_btn_colour = "grey"
 
         # Button callbacks
         self.open_file_callback = None
@@ -96,6 +108,8 @@ class UI(ctk.CTk):
             padx=execution_btns_padding,
             pady=execution_btns_padding
         )
+        self.enabled_btn_colour = self.run_button.cget("fg_color")
+        self.set_execution_buttons_state(run_enabled=True)
 
     def open_file_command(self):
         """Runs the callback provided for the open file button click"""
@@ -203,11 +217,47 @@ class UI(ctk.CTk):
 
     def create_code_execution_button(self, master, text, icon_file_path, command):
         """Creates a button to either start or stop the code execution"""
-        btn_icon = PhotoImage(file = icon_file_path)
-        btn_icon = btn_icon.subsample(8, 8)
+        btn_icon = self.create_button_icon(icon_file_path)
         return ctk.CTkButton(
             master,
             image=btn_icon,
             text=text,
             command=command
         )
+
+    def create_button_icon(self, icon_file_path):
+        """Creates a PhotoImage from the given file path, and resizes it"""
+        btn_icon = PhotoImage(file=icon_file_path)
+        btn_icon = btn_icon.subsample(8, 8)
+
+        return btn_icon
+
+    def set_execution_buttons_state(self, run_enabled):
+        """
+        Sets the enabled/disabled state of the run/stop buttons. They should always be 
+        in opposite states.
+        """
+        if run_enabled:
+            btn_to_enable = self.run_button
+            btn_to_disable = self.stop_button
+            enabled_icon_path = self.run_icon_path
+            disabled_icon_path = self.stop_icon_grey_path
+        else:
+            btn_to_enable = self.stop_button
+            btn_to_disable = self.run_button
+            enabled_icon_path = self.stop_icon_path
+            disabled_icon_path = self.run_icon_grey_path
+
+        # Buttons states
+        btn_to_enable.configure(state="normal")
+        btn_to_disable.configure(state="disabled")
+        
+        # Buttons icons
+        enabled_icon = self.create_button_icon(enabled_icon_path)
+        disabled_icon = self.create_button_icon(disabled_icon_path)
+        btn_to_enable.configure(image=enabled_icon)
+        btn_to_disable.configure(image=disabled_icon)
+
+        # Button colours
+        btn_to_enable.configure(fg_color=self.enabled_btn_colour)
+        btn_to_disable.configure(fg_color=self.disabled_btn_colour)

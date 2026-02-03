@@ -51,7 +51,12 @@ class IDE_Functions:
 
         self.save_to_file(self.current_file_name, text_to_save)
 
-    def run_code_from_current_file(self, get_input_callback, return_output_callback):
+    def run_code_from_current_file(
+        self,
+        get_input_callback,
+        return_output_callback,
+        on_finished_callback
+    ):
         """
         Runs the user code in a subprocess. This is used instead of a thread so that the 
         user code can be killed during execution without crashing the UI. Also is more 
@@ -79,7 +84,12 @@ class IDE_Functions:
 
         run_subprocess_thread = Thread(
             target=self._read_subprocess_output,
-            args=(self.run_subprocess, get_input_callback, return_output_callback)
+            args=(
+                self.run_subprocess,
+                get_input_callback,
+                return_output_callback,
+                on_finished_callback
+            )
         )
         run_subprocess_thread.start()
 
@@ -102,7 +112,8 @@ class IDE_Functions:
         self,
         subproc,
         get_input_callback,
-        return_output_callback
+        return_output_callback,
+        on_finished_callback
     ):
         """ 
         Reads the output from a subprocess, and handles input requests from that 
@@ -136,6 +147,8 @@ class IDE_Functions:
         subproc.stdout.close()
         subproc.stdin.close()
         subproc.wait()
+        
+        on_finished_callback()
 
     def stop_code_execution(self):
         """Stops the currently running user code subprocess"""
