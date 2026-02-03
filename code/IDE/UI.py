@@ -61,21 +61,40 @@ class UI(ctk.CTk):
         self.console_log.grid(row=3, column=0, sticky="ew")
         self.console_log.bind("<Return>", self._submit_input)
 
-        # Run button
-        run_icon = PhotoImage(
-            file = (
+        # Run and stop buttons
+        execution_btns_padding = 1
+        execution_btns_frame = ctk.CTkFrame(self)
+        execution_btns_frame.grid(row=3, column=1)
+        self.run_button = self.create_code_execution_button(
+            execution_btns_frame,
+            "Run",
+            (
                 "/home/olly/Documents/programming/other/rune_programming_language/code/"
                 "IDE/run_icon.png"
-            )
+            ),
+            self.run_command
         )
-        run_icon = run_icon.subsample(8, 8)
-        self.run_button = ctk.CTkButton(
-            self,
-            image=run_icon,
-            text="Run",
-            command=self.run_command
+        self.run_button.grid(
+            row=0,
+            column=0,
+            padx=execution_btns_padding,
+            pady=execution_btns_padding
         )
-        self.run_button.grid(row=3, column=1)
+        self.stop_button = self.create_code_execution_button(
+            execution_btns_frame,
+            "Stop",
+            (
+                "/home/olly/Documents/programming/other/rune_programming_language/code/"
+                "IDE/stop_icon.png"
+            ),
+            self.stop_command
+        )
+        self.stop_button.grid(
+            row=1,
+            column=0,
+            padx=execution_btns_padding,
+            pady=execution_btns_padding
+        )
 
     def open_file_command(self):
         """Runs the callback provided for the open file button click"""
@@ -92,6 +111,10 @@ class UI(ctk.CTk):
     def run_command(self):
         """Runs the callback provided for the run button click"""
         self.run_callback()
+
+    def stop_command(self):
+        """Runs the callback provided for the stop button click"""
+        self.stop_callback()
 
     def register_open_file_callback(self, callback):
         """Registers the new callback for the open file button in the menu"""
@@ -168,3 +191,14 @@ class UI(ctk.CTk):
     def key_pressed(self, char):
         """Function to call when a key is pressed on the keyboard"""
         self.text_box.insert("insert", char)
+
+    def create_code_execution_button(self, master, text, icon_file_path, command):
+        """Creates a button to either start or stop the code execution"""
+        btn_icon = PhotoImage(file = icon_file_path)
+        btn_icon = btn_icon.subsample(8, 8)
+        return ctk.CTkButton(
+            master,
+            image=btn_icon,
+            text=text,
+            command=command
+        )
