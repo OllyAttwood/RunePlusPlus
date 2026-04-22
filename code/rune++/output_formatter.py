@@ -56,7 +56,9 @@ class OutputFormatter:
         # If original is already valid rune characters
         elif (
             isinstance(self.original_output, str)
-            and set(self.original_output) <= set(token_map.VARIABLE_NAME_CHARS)
+            and set(self.original_output) <= set(
+                token_map.VARIABLE_NAME_CHARS).union({Lexer.SEPARATOR}
+            )
         ):
             new_output = self.original_output
 
