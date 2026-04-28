@@ -14,6 +14,8 @@ class KeyboardFrame(ctk.CTkFrame):
             # From token_map.py
             "ᚢ", "ᛒ", "ᛚ", "ᚫ", "ᚲ", "ᚿ", "ᛆ", "ᛅᚺᛣ", "ᛒᛖᛏ", "ᛖ", "ᛢ", "ᛖᛏ", "ᛉᛖᛚ",
             "ᛁᛩ", "ᚺᛅᛁᛩ", "ᚺᛅᛣ", "ᛞ", "ᛩᛟᛉᚴ", "ᛧ", "ᛧᛧ", "ᚺ", "ᚻ", "ᛝ",
+            # Native functions
+            "ᚹᛏᛁᛉᛚ", "ᛉᛟᛒ", "ᛁᛉᚹ", "ᛅᚺᛉ",
             # Boolean
             "ᚸ", "ᚷ",
             # Number related
@@ -53,11 +55,11 @@ class KeyboardFrame(ctk.CTkFrame):
         )
         separator_button.grid(
             row=num_rows,
-            column=1,
+            column=3,
             sticky="ew",
             padx=button_grid_padding,
             pady=button_grid_padding,
-            columnspan=6
+            columnspan=3
         )
 
     def register_key_callback(self, callback):
