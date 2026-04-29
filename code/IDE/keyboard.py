@@ -10,6 +10,12 @@ class KeyboardFrame(ctk.CTkFrame):
         super().__init__(master)
         self.key_callback = None
 
+        # Colour constants
+        self.KEYWORD_COLOUR = "dark olive green"
+        self.NATIVE_FUNCTION_COLOUR = "olive drab"
+        self.BOOLEAN_COLOUR = "sea green"
+        self.NUMBER_COLOUR = "medium sea green"
+
         # All chars except separator, which will be added separately
         key_button_data = self.create_key_button_data()
         separator_char = "⋅"
@@ -24,6 +30,7 @@ class KeyboardFrame(ctk.CTkFrame):
                 self,
                 text=cur_key_data.text,
                 font=(None, button_text_size),
+                fg_color=cur_key_data.colour,
                 command=lambda char=cur_key_data.text: self.key_callback(char)
             )
             key_button.grid(
@@ -39,6 +46,7 @@ class KeyboardFrame(ctk.CTkFrame):
             self,
             text=separator_char,
             font=(None, button_text_size),
+            fg_color=self.KEYWORD_COLOUR,
             command=lambda char=separator_char: self.key_callback(char)
         )
         separator_button.grid(
@@ -58,41 +66,41 @@ class KeyboardFrame(ctk.CTkFrame):
         """Creates the data for the key buttons"""
         return (
             # From token_map.py
-            KeyboardKeyData("ᚢ"),
-            KeyboardKeyData("ᛒ"), 
-            KeyboardKeyData("ᛚ"), 
-            KeyboardKeyData("ᚫ"), 
-            KeyboardKeyData("ᚲ"),
-            KeyboardKeyData("ᚿ"),
-            KeyboardKeyData("ᛆ"),
-            KeyboardKeyData("ᛅᚺᛣ"),
-            KeyboardKeyData("ᛒᛖᛏ"),
-            KeyboardKeyData("ᛖ"),
-            KeyboardKeyData("ᛢ"),
-            KeyboardKeyData("ᛖᛏ"),
-            KeyboardKeyData("ᛉᛖᛚ"),
-            KeyboardKeyData("ᛁᛩ"),
-            KeyboardKeyData("ᚺᛅᛁᛩ"),
-            KeyboardKeyData("ᚺᛅᛣ"),
-            KeyboardKeyData("ᛞ"),
-            KeyboardKeyData("ᛩᛟᛉᚴ"),
-            KeyboardKeyData("ᛧ"),
-            KeyboardKeyData("ᛧᛧ"),
-            KeyboardKeyData("ᚺ"),
-            KeyboardKeyData("ᚻ"),
-            KeyboardKeyData("ᛝ"),
+            KeyboardKeyData("ᚢ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛒ", colour=self.KEYWORD_COLOUR), 
+            KeyboardKeyData("ᛚ", colour=self.KEYWORD_COLOUR), 
+            KeyboardKeyData("ᚫ", colour=self.KEYWORD_COLOUR), 
+            KeyboardKeyData("ᚲ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᚿ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛆ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛅᚺᛣ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛒᛖᛏ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛖ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛢ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛖᛏ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛉᛖᛚ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛁᛩ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᚺᛅᛁᛩ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᚺᛅᛣ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛞ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛩᛟᛉᚴ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛧ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛧᛧ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᚺ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᚻ", colour=self.KEYWORD_COLOUR),
+            KeyboardKeyData("ᛝ", colour=self.KEYWORD_COLOUR),
             # Native functions
-            KeyboardKeyData("ᚹᛏᛁᛉᛚ"),
-            KeyboardKeyData("ᛉᛟᛒ"),
-            KeyboardKeyData("ᛁᛉᚹ"), 
-            KeyboardKeyData("ᛅᚺᛉ"),
+            KeyboardKeyData("ᚹᛏᛁᛉᛚ", colour=self.NATIVE_FUNCTION_COLOUR),
+            KeyboardKeyData("ᛉᛟᛒ", colour=self.NATIVE_FUNCTION_COLOUR),
+            KeyboardKeyData("ᛁᛉᚹ", colour=self.NATIVE_FUNCTION_COLOUR), 
+            KeyboardKeyData("ᛅᚺᛉ", colour=self.NATIVE_FUNCTION_COLOUR),
             # Boolean
-            KeyboardKeyData("ᚸ"),
-            KeyboardKeyData("ᚷ"),
+            KeyboardKeyData("ᚸ", colour=self.BOOLEAN_COLOUR),
+            KeyboardKeyData("ᚷ", colour=self.BOOLEAN_COLOUR),
             # Number related
-            KeyboardKeyData("ᛄ"),
-            KeyboardKeyData("ᛁ"),
-            KeyboardKeyData("."),
+            KeyboardKeyData("ᛄ", colour=self.NUMBER_COLOUR),
+            KeyboardKeyData("ᛁ", colour=self.NUMBER_COLOUR),
+            KeyboardKeyData(".", colour=self.NUMBER_COLOUR),
             # Remaining variable name characters
             KeyboardKeyData("ᚹ"),
             KeyboardKeyData("ᚱ"),
