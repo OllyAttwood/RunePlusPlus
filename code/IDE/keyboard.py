@@ -1,6 +1,7 @@
 from tkinter import *
 import math
 import customtkinter as ctk
+from keyboard_key_data import KeyboardKeyData
 
 class KeyboardFrame(ctk.CTkFrame):
     """A customtkinter frame which displays the keyboard"""
@@ -10,33 +11,20 @@ class KeyboardFrame(ctk.CTkFrame):
         self.key_callback = None
 
         # All chars except separator, which will be added separately
-        key_chars = (
-            # From token_map.py
-            "ᚢ", "ᛒ", "ᛚ", "ᚫ", "ᚲ", "ᚿ", "ᛆ", "ᛅᚺᛣ", "ᛒᛖᛏ", "ᛖ", "ᛢ", "ᛖᛏ", "ᛉᛖᛚ",
-            "ᛁᛩ", "ᚺᛅᛁᛩ", "ᚺᛅᛣ", "ᛞ", "ᛩᛟᛉᚴ", "ᛧ", "ᛧᛧ", "ᚺ", "ᚻ", "ᛝ",
-            # Native functions
-            "ᚹᛏᛁᛉᛚ", "ᛉᛟᛒ", "ᛁᛉᚹ", "ᛅᚺᛉ",
-            # Boolean
-            "ᚸ", "ᚷ",
-            # Number related
-            "ᛄ", "ᛁ", ".",
-            # Remaining variable name characters
-            "ᚹ", "ᚱ", "ᛩ", "ᛐ", "ᛏ", "ᚳ", "ᛣ", "ᚴ", "ᚠ", "ᛉ", "ᚩ", "ᛠ", "ᛈ", "ᛕ", "ᛅ",
-            "ᚾ", "ᛡ", "ᛋ", "ᛟ"
-        )
+        key_button_data = self.create_key_button_data()
         separator_char = "⋅"
         num_rows = 6
-        num_cols = math.ceil(len(key_chars) / num_rows)
+        num_cols = math.ceil(len(key_button_data) / num_rows)
 
         # Add regular key buttons
-        for i, key_char in enumerate(key_chars):
+        for i, cur_key_data in enumerate(key_button_data):
             row = i // num_cols
             col = i % num_cols
             key_button = ctk.CTkButton(
                 self,
-                text=key_char,
+                text=cur_key_data.text,
                 font=(None, button_text_size),
-                command=lambda char=key_char: self.key_callback(char)
+                command=lambda char=cur_key_data.text: self.key_callback(char)
             )
             key_button.grid(
                 row=row,
@@ -65,3 +53,64 @@ class KeyboardFrame(ctk.CTkFrame):
     def register_key_callback(self, callback):
         """Registers the new callback for the key press"""
         self.key_callback = callback
+
+    def create_key_button_data(self):
+        """Creates the data for the key buttons"""
+        return (
+            # From token_map.py
+            KeyboardKeyData("ᚢ"),
+            KeyboardKeyData("ᛒ"), 
+            KeyboardKeyData("ᛚ"), 
+            KeyboardKeyData("ᚫ"), 
+            KeyboardKeyData("ᚲ"),
+            KeyboardKeyData("ᚿ"),
+            KeyboardKeyData("ᛆ"),
+            KeyboardKeyData("ᛅᚺᛣ"),
+            KeyboardKeyData("ᛒᛖᛏ"),
+            KeyboardKeyData("ᛖ"),
+            KeyboardKeyData("ᛢ"),
+            KeyboardKeyData("ᛖᛏ"),
+            KeyboardKeyData("ᛉᛖᛚ"),
+            KeyboardKeyData("ᛁᛩ"),
+            KeyboardKeyData("ᚺᛅᛁᛩ"),
+            KeyboardKeyData("ᚺᛅᛣ"),
+            KeyboardKeyData("ᛞ"),
+            KeyboardKeyData("ᛩᛟᛉᚴ"),
+            KeyboardKeyData("ᛧ"),
+            KeyboardKeyData("ᛧᛧ"),
+            KeyboardKeyData("ᚺ"),
+            KeyboardKeyData("ᚻ"),
+            KeyboardKeyData("ᛝ"),
+            # Native functions
+            KeyboardKeyData("ᚹᛏᛁᛉᛚ"),
+            KeyboardKeyData("ᛉᛟᛒ"),
+            KeyboardKeyData("ᛁᛉᚹ"), 
+            KeyboardKeyData("ᛅᚺᛉ"),
+            # Boolean
+            KeyboardKeyData("ᚸ"),
+            KeyboardKeyData("ᚷ"),
+            # Number related
+            KeyboardKeyData("ᛄ"),
+            KeyboardKeyData("ᛁ"),
+            KeyboardKeyData("."),
+            # Remaining variable name characters
+            KeyboardKeyData("ᚹ"),
+            KeyboardKeyData("ᚱ"),
+            KeyboardKeyData("ᛩ"), 
+            KeyboardKeyData("ᛐ"),
+            KeyboardKeyData("ᛏ"),
+            KeyboardKeyData("ᚳ"), 
+            KeyboardKeyData("ᛣ"),
+            KeyboardKeyData("ᚴ"),
+            KeyboardKeyData("ᚠ"), 
+            KeyboardKeyData("ᛉ"),
+            KeyboardKeyData("ᚩ"),
+            KeyboardKeyData("ᛠ"), 
+            KeyboardKeyData("ᛈ"),
+            KeyboardKeyData("ᛕ"),
+            KeyboardKeyData("ᛅ"),
+            KeyboardKeyData("ᚾ"),
+            KeyboardKeyData("ᛡ"),
+            KeyboardKeyData("ᛋ"), 
+            KeyboardKeyData("ᛟ")
+        )
