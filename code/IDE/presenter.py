@@ -33,6 +33,7 @@ class Presenter:
         if file_path:
             file_contents = self.model.open_file(file_path)
             self.view.set_code_window_text(file_contents)
+            self.view.set_title(file_path)
 
     def on_save_as_button_click(self):
         """
@@ -43,6 +44,7 @@ class Presenter:
         file_path = self.view.request_save_path()
         if file_path:
             self.model.save_to_file(file_path, file_contents)
+            self.view.set_title(file_path)
 
     def on_save_button_click(self):
         """Gets the text from the code window, then saves it as the current file"""

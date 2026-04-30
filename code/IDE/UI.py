@@ -16,7 +16,7 @@ class UI(ctk.CTk):
     def __init__(self):
         # Window setup
         super().__init__()
-        self.title("Rune++ IDE")
+        self.set_title()
         self.attributes("-zoomed", True) # Full-screen
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
@@ -162,6 +162,15 @@ class UI(ctk.CTk):
         """Sets the code window text"""
         self.text_box.delete("1.0", "end")
         self.text_box.insert("1.0", new_text)
+
+    def set_title(self, file_path=None):
+        """Sets the title of the window"""
+        full_title = "Rune++ IDE"
+
+        if file_path:
+            full_title += f" - {file_path}"
+
+        self.title(full_title)
 
     def request_save_path(self):
         """Produces a pop-up asking the user for a file path to save to"""
