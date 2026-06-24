@@ -152,3 +152,5 @@ The following is a code sample which recursively calculates the n-th fibonacci n
 
 ᛩᛁᚱ⋅ᚿ⋅ᛁᛄᛄᛄ⋅ᛆ
 ```
+## Disclaimer
+Rune++ is a non-commercial, fan-made, educational project created purely for fun. It is inspired by the works of J.R.R. Tolkien but is in no way affiliated with, authorised, maintained, sponsored, or endorsed by the Tolkien Estate, Middle-earth Enterprises, or any of their affiliates.
