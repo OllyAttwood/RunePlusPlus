@@ -16,6 +16,14 @@ Although Rune++ programs can be run directly from the command line, it is easier
 <br>
 <br>
 
+## Technical Overview
+Rune++ consists of:
+- A lexer that converts rune characters into tokens
+- A parser that generates an abstract syntax tree (AST)
+- An interpreter that executes the AST
+- A CustomTkinter-based IDE with a specialised rune keyboard
+- Automated unit testing (Pytest) covering core language functionality to help ensure everything behaves consistently as new features are added
+
 ## Language Features
 ### Data Types
 - Number
