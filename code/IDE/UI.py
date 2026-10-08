@@ -111,6 +111,9 @@ class UI(ctk.CTk):
         self.enabled_btn_colour = self.run_button.cget("fg_color")
         self.set_execution_buttons_state(run_enabled=True)
 
+        # Give main code textbox the focus
+        self.text_box.focus_set()
+
     def open_file_command(self):
         """Runs the callback provided for the open file button click"""
         self.open_file_callback()
@@ -222,7 +225,14 @@ class UI(ctk.CTk):
 
     def key_pressed(self, char):
         """Function to call when a key is pressed on the keyboard"""
-        self.text_box.insert("insert", char)
+        # Get which widget currently has focus
+        focussed = self.focus_get()
+        
+        # Append keyboard keytext to focussed widget
+        if focussed is self.text_box._textbox:
+            self.text_box.insert("insert", char)
+        elif focussed is self.console_log._textbox:
+            self.console_log.insert("insert", char)
 
     def create_code_execution_button(self, master, text, icon_file_path, command):
         """Creates a button to either start or stop the code execution"""
