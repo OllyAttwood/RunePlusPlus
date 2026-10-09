@@ -5,6 +5,7 @@ import menu_bar
 import keyboard
 from messagebox import MessageBox
 import threading
+import os
 
 # Ignore CTkButton warning when using a PhotoImage
 import warnings
@@ -23,14 +24,11 @@ class UI(ctk.CTk):
         text_size = 15
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("green")
-        icon_dir_path = (
-            "/home/olly/Documents/programming/other/rune_programming_language/code/"
-            "IDE/"
-        )
-        self.run_icon_path = icon_dir_path + "run_icon.png"
-        self.stop_icon_path = icon_dir_path + "stop_icon.png"
-        self.run_icon_grey_path = icon_dir_path + "run_icon_grey.png"
-        self.stop_icon_grey_path = icon_dir_path + "stop_icon_grey.png"
+        icon_dir_path = os.path.dirname(__file__)
+        self.run_icon_path = os.path.join(icon_dir_path, "run_icon.png")
+        self.stop_icon_path = os.path.join(icon_dir_path, "stop_icon.png")
+        self.run_icon_grey_path = os.path.join(icon_dir_path, "run_icon_grey.png")
+        self.stop_icon_grey_path = os.path.join(icon_dir_path, "stop_icon_grey.png")
         # enabled_btn_colour is initialised after button is created; stored for when 
         # buttons are re-enabled
         self.enabled_btn_colour = None
@@ -81,10 +79,7 @@ class UI(ctk.CTk):
         self.run_button = self.create_code_execution_button(
             execution_btns_frame,
             "Run",
-            (
-                "/home/olly/Documents/programming/other/rune_programming_language/code/"
-                "IDE/run_icon.png"
-            ),
+            self.run_icon_path,
             self.run_command
         )
         self.run_button.grid(
@@ -96,10 +91,7 @@ class UI(ctk.CTk):
         self.stop_button = self.create_code_execution_button(
             execution_btns_frame,
             "Stop",
-            (
-                "/home/olly/Documents/programming/other/rune_programming_language/code/"
-                "IDE/stop_icon.png"
-            ),
+            self.stop_icon_path,
             self.stop_command
         )
         self.stop_button.grid(
