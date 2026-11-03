@@ -151,7 +151,7 @@ class UI(ctk.CTk):
 
     def get_code_window_text(self):
         """Returns the current text in the code window"""
-        return self.text_box.get("1.0", "end")
+        return self.text_box.get("1.0", "end-1c")
 
     def set_code_window_text(self, new_text):
         """Sets the code window text"""
