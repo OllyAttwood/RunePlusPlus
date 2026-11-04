@@ -4,6 +4,10 @@ import tkinter.filedialog
 class MenuBar(Menu):
     """The menu bar which runs along the top of the window"""
 
+    ENABLED = "normal"
+    DISABLED = "disabled"
+    RUN_FILE_MENU_ITEM_TEXT = "Run current file"
+
     def __init__(self, bg=None, activebackground=None, activeforeground=None):
         super().__init__(
             bg=bg,
@@ -31,15 +35,15 @@ class MenuBar(Menu):
         file_menu.add_command(label="Save as...", command=self.save_as_command)
 
         # Run menu
-        run_menu = Menu(
+        self.run_menu = Menu(
             self,
             tearoff=0,
             bg=bg,
             activebackground=activebackground,
             activeforeground=activeforeground
         )
-        self.add_cascade(label="Run", menu=run_menu)
-        run_menu.add_command(label="Run current file", command=self.run_command)
+        self.add_cascade(label="Run", menu=self.run_menu)
+        self.run_menu.add_command(label=self.RUN_FILE_MENU_ITEM_TEXT, command=self.run_command)
 
     def open_file_command(self):
         """
@@ -88,3 +92,13 @@ class MenuBar(Menu):
         Updates the callback for the run button
         """
         self.run_callback = callback
+
+    def set_run_enabled(self, enabled):
+        """
+        Enables/disables the run menu item
+        """
+        menu_item_state = self.ENABLED if enabled else self.DISABLED
+        self.run_menu.entryconfig(
+            self.RUN_FILE_MENU_ITEM_TEXT,
+            state=menu_item_state
+        )

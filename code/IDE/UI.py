@@ -246,7 +246,7 @@ class UI(ctk.CTk):
     def set_execution_buttons_state(self, run_enabled):
         """
         Sets the enabled/disabled state of the run/stop buttons. They should always be 
-        in opposite states.
+        in opposite states. Also enables/disables the run menu item in the menu bar.
         """
         if run_enabled:
             btn_to_enable = self.run_button
@@ -272,3 +272,6 @@ class UI(ctk.CTk):
         # Button colours
         btn_to_enable.configure(fg_color=self.enabled_btn_colour)
         btn_to_disable.configure(fg_color=self.disabled_btn_colour)
+
+        # Menu bar
+        self.menu.set_run_enabled(run_enabled)
