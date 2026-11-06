@@ -14,6 +14,8 @@ warnings.filterwarnings("ignore", message="CTkButton Warning: Given image is not
 class UI(ctk.CTk):
     """The main UI Window"""
 
+    FILE_DIALOG_EXTENSIONS = [("Rune++ files", "*.rune"), ("All files", "*.*")]
+
     def __init__(self):
         # Window setup
         super().__init__()
@@ -169,11 +171,16 @@ class UI(ctk.CTk):
 
     def request_save_path(self):
         """Produces a pop-up asking the user for a file path to save to"""
-        return tkinter.filedialog.asksaveasfilename()
+        return tkinter.filedialog.asksaveasfilename(
+            defaultextension=".rune",
+            filetypes=self.FILE_DIALOG_EXTENSIONS
+        )
 
     def request_open_path(self):
         """Produces a pop-up asking the user for a file path to open"""
-        return tkinter.filedialog.askopenfilename()
+        return tkinter.filedialog.askopenfilename(
+            filetypes=self.FILE_DIALOG_EXTENSIONS
+        )
 
     def display_error_message(self, error_message):
         """Shows an error message pop-up"""
