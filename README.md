@@ -145,6 +145,8 @@ Run the IDE:
 python3 code/IDE/IDE.py 
 ```
 
+Please note that Rune++ and the IDE have only been tested on Ubuntu.
+
 ## Quick Example
 The following is a code sample which recursively calculates the n-th fibonacci number:
 
