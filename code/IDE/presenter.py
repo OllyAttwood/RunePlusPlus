@@ -47,12 +47,16 @@ class Presenter:
             self.view.set_title(file_path)
 
     def on_save_button_click(self):
-        """Gets the text from the code window, then saves it as the current file"""
-        file_contents = self.view.get_code_window_text()
-        try:
+        """
+        Gets the text from the code window, then saves it as the current file. If there
+        is no current file, treats it as a "Save As..." operation.
+        """
+        if self.model.has_current_path():
+            file_contents = self.view.get_code_window_text()
             self.model.save_to_current_file(file_contents)
-        except ValueError as err:
-            self.view.display_error_message(err)
+        else:
+            # No current save file, therefore treats it as a "Save As..." operation
+            self.on_save_as_button_click()
 
     def on_run_button_click(self):
         """Runs the code in the current file"""

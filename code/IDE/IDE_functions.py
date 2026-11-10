@@ -46,10 +46,14 @@ class IDE_Functions:
         """
         Saves the text to the current file location, also updates current_file_name
         """
-        if self.current_file_name == "" or self.current_file_name is None:
+        if not self.has_current_path():
             raise ValueError("No current file to save to!")
 
         self.save_to_file(self.current_file_name, text_to_save)
+
+    def has_current_path(self):
+        """Returns true if there is a current file path, otherwise returns false."""
+        return bool(self.current_file_name)
 
     def run_code_from_current_file(
         self,
