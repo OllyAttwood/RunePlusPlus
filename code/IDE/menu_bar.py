@@ -31,7 +31,11 @@ class MenuBar(Menu):
         )
         self.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Open file...", command=self.open_file_command)
-        file_menu.add_command(label="Save", command=self.save_command)
+        file_menu.add_command(
+            label="Save", 
+            command=self.save_command, 
+            accelerator="Ctrl+S"
+        )
         file_menu.add_command(label="Save as...", command=self.save_as_command)
 
         # Run menu

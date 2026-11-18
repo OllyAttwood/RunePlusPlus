@@ -105,6 +105,9 @@ class UI(ctk.CTk):
         self.enabled_btn_colour = self.run_button.cget("fg_color")
         self.set_execution_buttons_state(run_enabled=True)
 
+        # Keyboard shortcuts
+        self.bind("<Control-s>", lambda event: self.save_command())
+
         # Give main code textbox the focus
         self.text_box.focus_set()
 
